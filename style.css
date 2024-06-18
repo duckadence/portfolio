@@ -42,6 +42,8 @@ a:active {
 main {
 	padding: 0vw 30vw;
 	flex: 1;
+	
+	animation: fadeIn 1s;
 }
 
 h1 {
