@@ -29,3 +29,11 @@
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
+
+/************************/
+/*******about.html*******/
+/************************/
+
+.about-box {
+	padding-bottom: 5vw;
+}
