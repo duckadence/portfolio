@@ -40,16 +40,27 @@ a:active {
 }
 
 main {
-	padding: 0vw 30vw;
+	padding: 0vw 20vw;
 	flex: 1;
 	
 	animation: fadeIn 1s;
 }
 
 h1 {
-	font-size: 7em;
+	font-size: 4em;
 }
 
 p {
 	text-indent: 4em;
+}
+
+img {
+	min-width: 45%;
+	height: auto;
+}
+
+.image-text {
+	display: flex;
+	flex-direction: row;
+	gap: 10%;
 }
