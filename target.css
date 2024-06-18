@@ -8,6 +8,8 @@
 
 #landing-navigation {
 	gap: 7vw;
+	/*overflow: hidden;*/
+	white-space: nowrap;
 }
 
 .arrow {
