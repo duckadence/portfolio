@@ -1,6 +1,9 @@
 body {
 	background-color: #FCF5E5; /* Parchment: #FCF5E5  Inverse: #030A1A */
+	
 	font-family: monospace;
+	font-size: 1.25em;
+	
 	min-height: 100vh;
 	margin: 0;
 	display: flex;
@@ -11,11 +14,11 @@ header, footer {
 	text-align: center;
 }
 
-#navigation {
+.navigation {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	gap: 20px;
+	gap: 40px;
 	
 	list-style-type: none;
 	margin: 0;
@@ -37,5 +40,14 @@ a:active {
 }
 
 main {
+	padding: 0vw 30vw;
 	flex: 1;
+}
+
+h1 {
+	font-size: 7em;
+}
+
+p {
+	text-indent: 4em;
 }
