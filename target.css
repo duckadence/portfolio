@@ -37,3 +37,14 @@
 .about-box {
 	padding-bottom: 5vw;
 }
+
+.gallery {
+	display: flex;
+	flex-direction: row;
+	gap: 5%;
+}
+
+.display {
+	width: 100%;
+	height: auto;
+}
