@@ -14,4 +14,15 @@ function reveal() {
   }
 }
 
+function arrow() { 
+	var element = document.getElementById("scrollArrow");
+    if (window.scrollY >= 1) {
+      element.classList.add("fade");
+    } else{
+      element.classList.remove("fade");
+    }
+}
+
 window.addEventListener("scroll", reveal);
+window.addEventListener("scroll", arrow);
+
