@@ -2,8 +2,8 @@ body {
 	background-color: #F3E8D8; /* Parchment: #F3E8D8  Inverse: #030A1A */
 	color: #black;
 	
-	font-family: monospace;
-	font-size: 1.25em;
+	font-family: monospace, monospace;
+	font-size: 1em;
 	
 	min-height: 100vh;
 	margin: 0;
