@@ -47,16 +47,17 @@ main {
 }
 
 h1 {
-	font-size: 4em;
+	font-size: 3.4vw;
+	text-align: center;
 }
 
 h2 {
-	font-size: 3em;
+	font-size: 2vw;
 	text-align: center;
 }
 
 h3 {
-	font-size: 3em;
+	font-size: 2vw;
 }
 
 p {
