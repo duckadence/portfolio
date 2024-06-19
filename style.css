@@ -1,5 +1,6 @@
 body {
 	background-color: #F3E8D8; /* Parchment: #F3E8D8  Inverse: #030A1A */
+	color: #black;
 	
 	font-family: monospace;
 	font-size: 1.25em;
@@ -90,4 +91,28 @@ img {
 	align-items: center;
 	gap: 10%;
 	width: 33%;
+}
+
+#bottom-navigation {
+	padding-top: 10vh;
+	gap: 7vw;
+	/*overflow: hidden;*/
+	white-space: nowrap;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 1.5px 1.5px 0;
+  display: inline-block;
+  padding: 4px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
 }
