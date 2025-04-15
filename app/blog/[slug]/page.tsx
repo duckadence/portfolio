@@ -85,7 +85,7 @@ export default function Blog({ params }) {
       <h1 className="title font-semibold text-2xl tracking-tighter">
         {post.metadata.title}
       </h1>
-	  <div class="flex flex-row justify-start my-2">
+	  <div className="flex flex-row justify-start my-2">
 				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-400 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag1}
 				</p>
