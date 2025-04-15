@@ -86,19 +86,19 @@ export default function Blog({ params }) {
         {post.metadata.title}
       </h1>
 	  <div className="flex flex-row justify-start my-2">
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-400 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag1}
 				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-400 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag2}
 				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-400 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag3}
 				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-400 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag4}
 				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-400 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag5}
 				</p>
 		</div>
