@@ -1,7 +1,7 @@
 import { BlogPosts } from 'app/components/posts'
 
 export const metadata = {
-  title: 'Projects',
+  title: 'projects',
   description: 'See my projects',
 }
 
