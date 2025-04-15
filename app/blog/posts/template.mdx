@@ -1,0 +1,105 @@
+---
+title: "MDX Examples"
+publishedAt: "1999-01-11"
+summary: "Nextfolio custom MDX examples."
+tags: "Custom MDX, Web development"
+---
+
+Nextfolio uses [custom MDX](https://github.com/1msirius/Nextfolio/blob/main/app/components/mdx.tsx) for blog posts, making it easy to include JSX components such as interactive embeds, charts, or alerts directly in your markdown content.
+
+Here are some examples of using MDX:
+
+## h2 Heading
+
+### h3 Heading
+
+#### h4 Heading
+
+##### h5 Heading
+
+## Emphasis
+
+**This is bold text**
+
+_This is italic text_
+
+<del> Strikethrough </del>
+
+## Blockquotes
+
+> If today were the last day of my life, would I want to do what I am about to do today? – Steve Jobs
+
+## Links
+
+- Nextfolio is built with [Next.js](https://nextjs.org).
+- Nextfolio uses [pnpm](https://pnpm.io/) for package management.
+
+## CodeBlocks
+
+```
+// This is commented-out code
+export default function HelloWorld() {
+  return (
+    <h1>Hello, World!</h1>
+  );
+}
+```
+
+## Images
+
+![test](/test.jpg)
+
+## Embeds
+
+### YouTube Videos
+
+Nextfolio uses [react-youtube](https://www.npmjs.com/package/react-youtube) to embed YouTube videos in MDX posts.
+
+```
+<YouTube videoId="wXhTHyIgQ_U" />
+```
+
+Renders:
+
+<YouTube videoId="wXhTHyIgQ_U" />
+
+## Tables
+
+Nextfolio uses a custom [table component](https://github.com/1msirius/Nextfolio/blob/main/app/components/mdx.tsx#L38) to render tables in MDX posts.
+
+```
+<Table
+  data={{
+    headers: ["Title", "Description"],
+    rows: [
+      [
+        "First item",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid perspiciatis repellat amet quos.",
+      ],
+      [
+        "Second item",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid perspiciatis repellat amet quos.",
+      ],
+    ],
+  }}
+/>
+```
+
+Renders:
+
+<Table
+  data={{
+    headers: ["Title", "Description"],
+    rows: [
+      [
+        "First item",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid perspiciatis repellat amet quos.",
+      ],
+      [
+        "Second item",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid perspiciatis repellat amet quos.",
+      ],
+    ],
+  }}
+/>
+

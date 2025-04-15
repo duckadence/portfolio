@@ -1,30 +1,38 @@
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
-import React from 'react'
-import { YouTubeComponent } from "./youtube";
+import { YouTubeComponent } from "./youtube"
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
     <th key={index}>{header}</th>
-  ))
+  ));
   let rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
         <td key={cellIndex}>{cell}</td>
       ))}
     </tr>
-  ))
-
+  ));
   return (
     <table>
       <thead>
-        <tr>{headers}</tr>
+        <tr className="text-left">{headers}</tr>
       </thead>
       <tbody>{rows}</tbody>
     </table>
-  )
+  );
+}
+
+function Callout(props) {
+  return (
+    <div className="px-4 py-3 bg-[#F7F7F7] dark:bg-[#181818] rounded p-1 text-sm flex items-center text-neutral-900 dark:text-neutral-100 mb-8">
+      <div className="flex items-center w-4 mr-4">{props.emoji}</div>
+      <div className="w-full callout leading-relaxed">{props.children}</div>
+    </div>
+  );
 }
 
 function CustomLink(props) {
@@ -52,6 +60,10 @@ function RoundedImage(props) {
 function Code({ children, ...props }) {
   let codeHTML = highlight(children)
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+}
+
+function Strikethrough(props) {
+  return <del {...props} />;
 }
 
 function slugify(str) {
@@ -99,6 +111,7 @@ let components = {
   YouTube: YouTubeComponent,
   code: Code,
   Table,
+  Callout,
 }
 
 export function CustomMDX(props) {
