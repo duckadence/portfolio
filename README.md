@@ -1,16 +1,26 @@
 # Based on Vercel "Portfolio Starter Kit"
 
-This is built on a porfolio site template complete with a blog. Includes:
-
-- MDX and Markdown support
-- Optimized for SEO (sitemap, robots, JSON-LD schema)
-- RSS Feed
-- Dynamic OG images
-- Syntax highlighting
-- Tailwind v4
-- Vercel Speed Insights / Web Analytics
-- Geist font
-
+This is built on the Vercel "Porfolio Starter Kit" site template complete with a blog. 
 https://vercel.com/templates/next.js/portfolio-starter-kit
 
-Added simple static tags
+TODO:
+- ~~Remove unecessary elements
+- ~~Replace placeholder elements
+- ~~Add resume
+- ~~Add post tags
+- Capstone Project 
+	- ~~Create page
+	- ~~Add demo vid
+	- Add writeup
+- Whackamole Project
+	- ~~Create page
+	- ~~Add demo vid
+	- Add writeup
+- Security System Project
+	- Create page
+	- Add demo vid
+	- Add writeup
+- Radio Controlled Watch Project
+	- Create page
+	- Add demo vid
+	- Add writeup
