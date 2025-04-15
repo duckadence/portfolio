@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
+import { YouTubeComponent } from "./youtube";
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -95,6 +96,7 @@ let components = {
   h6: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
+  YouTube: YouTubeComponent,
   code: Code,
   Table,
 }
