@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { MDXRemote } from 'next-mdx-remote/rsc'
+import { MDXRemote } from 'next-mdx-remote'
 import { highlight } from 'sugar-high'
 import { YouTubeComponent } from "./youtube"
 
@@ -114,9 +114,11 @@ let components = {
   Callout,
 }
 
-export async function CustomMDX(props) {
-  return await MDXRemote({
-    ...props,
-    components: { ...components, ...(props.components || {}) }
-  })
+export function CustomMDX(props) {
+  return (
+    <MDXRemote
+      {...props}
+      components={{ ...components, ...(props.components || {}) }}
+    />
+  )
 }
