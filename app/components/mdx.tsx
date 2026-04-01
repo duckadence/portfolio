@@ -6,6 +6,7 @@ import { highlight } from 'sugar-high'
 import { YouTubeComponent } from "./youtube"
 
 function Table({ data }) {
+  if (!data || !data.headers) return null;
   let headers = data.headers.map((header, index) => (
     <th key={index}>{header}</th>
   ));
