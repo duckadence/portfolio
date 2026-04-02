@@ -57,7 +57,7 @@ export function BlogPosts({ limit, showViewAll = false }: {
 			  <div></div>
 
 				{post.metadata.image && !showViewAll && (
-				<div className="relative w-full aspect-square overflow-hidden mt-2">
+				<div className="relative w-full aspect-video overflow-hidden mt-2">
 				  <Image
 					src={post.metadata.image}
 					alt={post.metadata.title}
