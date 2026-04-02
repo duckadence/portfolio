@@ -37,27 +37,27 @@ export function BlogPosts({ limit, showViewAll = false }: {
                 {post.metadata.title}
               </p>
 
-			  <div className="flex flex-row justify-start gap-0.5 mt-1 h-fit">
-				<p className="empty:hidden text-neutral-899 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+			  <div className="flex flex-wrap justify-start gap-0.5 mt-1 h-fit">
+				<p className="empty:hidden whitespace-nowrap text-neutral-899 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag1}
 				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden whitespace-nowrap text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag2}
 				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden whitespace-nowrap text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag3}
 				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden whitespace-nowrap text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag4}
 				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+				<p className="empty:hidden whitespace-nowrap text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag5}
 				</p>
 			  </div>
 			  <div></div>
 
 				{post.metadata.image && !showViewAll && (
-				<div className="relative w-full max-w-full h-48 overflow-hidden mt-2">
+				<div className="relative w-full aspect-square overflow-hidden mt-2">
 				  <Image
 					src={post.metadata.image}
 					alt={post.metadata.title}
