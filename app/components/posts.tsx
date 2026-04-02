@@ -2,7 +2,10 @@ import Link from 'next/link'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
 import Image from "next/image"
 
-export function BlogPosts({ limit, showViewAll = false }) {
+export function BlogPosts({ limit, showViewAll = false }: {
+	limit?: number
+	showViewAll?: boolean
+}) {
   let allBlogs = getBlogPosts()
 
   const posts = allBlogs
