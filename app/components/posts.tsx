@@ -1,35 +1,41 @@
 import Link from 'next/link'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
+import Image from "next/image"
 
-export function BlogPosts() {
+export function BlogPosts({ limit, showViewAll = false }) {
   let allBlogs = getBlogPosts()
+
+  const posts = allBlogs
+    .sort((a, b) => {
+      if (
+        new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
+      ) {
+        return -1
+      }
+      return 1
+    })
+    .slice(0, limit || allBlogs.length) // 👈 key line
 
   return (
     <div>
-      {allBlogs
-        .sort((a, b) => {
-          if (
-            new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
-          ) {
-            return -1
-          }
-          return 1
-        })
-        .map((post) => (
-          <Link
-            key={post.slug}
-            className="flex flex-col space-y-1 mb-8"
-            href={`/blog/${post.slug}`}
-          >
-            <div className="w-max grid grid-flow-col grid-rows-2 space-x-6">
+      {posts.map((post) => (
+        <Link
+          key={post.slug}
+          className="flex flex-col gap-2 mb-10"
+          href={`/blog/${post.slug}`}
+        >
+         <div className="grid grid-cols-[80px_minmax(0,1fr)] gap-x-6">
+
 			  <p className="row-span-2 text-neutral-500 dark:text-neutral-400 w-[80px] tabular-nums">
                 {formatDate(post.metadata.publishedAt, false)}
               </p>
-              <p className="text-neutral-900 dark:text-neutral-100 w-[60vw] tracking-tight">
+
+              <p className="text-neutral-900 dark:text-neutral-100 w-full tracking-tight">
                 {post.metadata.title}
               </p>
-			  <div className="flex flex-row justify-start mt-1 h-fit">
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
+
+			  <div className="flex flex-row justify-start gap-0.5 mt-1 h-fit">
+				<p className="empty:hidden text-neutral-899 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
                 {post.metadata.tag1}
 				</p>
 				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
@@ -45,9 +51,34 @@ export function BlogPosts() {
                 {post.metadata.tag5}
 				</p>
 			  </div>
-			</div>
+			  <div></div>
+
+				{post.metadata.image && !showViewAll && (
+				<div className="relative w-full max-w-full h-48 overflow-hidden mt-2">
+				  <Image
+					src={post.metadata.image}
+					alt={post.metadata.title}
+					fill
+					className="object-cover rounded-lg"
+				  />
+				</div>
+	  		  )}	
+
+  			</div> 	
+        </Link>
+      ))}
+
+      {/* 👇 only show when enabled */}
+      {showViewAll && (
+        <div className="mt-4">
+          <Link
+            href="/blog"
+            className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition"
+          >
+            See all posts →
           </Link>
-        ))}
+        </div>
+      )}
     </div>
   )
 }

@@ -14,7 +14,7 @@ export default function Page() {
         mode, which eases long coding sessions by reducing eye strain.`}
       </p>
       <div className="my-8">
-        <BlogPosts />
+        <BlogPosts limit={3} showViewAll/>
       </div>
     </section>
   )
