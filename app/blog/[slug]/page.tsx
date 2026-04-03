@@ -90,7 +90,7 @@ export default function Blog({ params }) {
         {post.metadata.title}
       </h1>
 	  
-	<div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-2 mb-4">
+	<div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-2 mb-2">
   {tags.map((tag) => (
     <span
       key={tag}
@@ -103,7 +103,7 @@ export default function Blog({ params }) {
     </span>
   ))}
 </div> 
-	<div className="flex justify-between items-center mt-2 mb-8 text-sm">
+	<div className="flex justify-between items-center mt-0 mb-8 text-sm">
         <p className="text-sm text-neutral-600 !dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}
         </p>
