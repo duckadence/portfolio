@@ -4,6 +4,8 @@ This is built on the Vercel "Porfolio Starter Kit" site template complete with a
 https://vercel.com/templates/next.js/portfolio-starter-kit
 
 TODO:
+- General
+    - Fix scroll issue
 - Capstone Project
 	- Add writeup
 - Whackamole Project
