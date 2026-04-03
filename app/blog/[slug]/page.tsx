@@ -53,6 +53,10 @@ export function generateMetadata({ params }) {
 
 export default function Blog({ params }) {
   let post = getBlogPosts().find((post) => post.slug === params.slug)
+	
+  const tags = Array.isArray(post.metadata.tags)
+  ? post.metadata.tags
+  : []
 
   if (!post) {
     notFound()
@@ -85,23 +89,17 @@ export default function Blog({ params }) {
       <h1 className="title font-semibold text-2xl tracking-tighter">
         {post.metadata.title}
       </h1>
-	  <div className="flex flex-row justify-start my-2 w-[69vw]">
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
-                {post.metadata.tag1}
-				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
-                {post.metadata.tag2}
-				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
-                {post.metadata.tag3}
-				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
-                {post.metadata.tag4}
-				</p>
-				<p className="empty:hidden text-neutral-900 dark:text-neutral-100 tracking-tight bg-neutral-300 dark:bg-neutral-700 rounded-md mr-1 pb-0.5 px-1">
-                {post.metadata.tag5}
-				</p>
-		</div>
+	  
+		<div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-1">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-1 pb-0.5"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}

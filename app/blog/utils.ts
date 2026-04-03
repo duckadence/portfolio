@@ -1,58 +1,45 @@
 import fs from 'fs'
 import path from 'path'
+import matter from 'gray-matter'
 
 type Metadata = {
   title: string
   publishedAt: string
   summary: string
   image?: string
-  tag1?: string
-  tag2?: string
-  tag3?: string
-  tag4?: string
-  tag5?: string
+  tags?: string[]
 }
 
-function parseFrontmatter(fileContent: string) {
-  let frontmatterRegex = /---\s*([\s\S]*?)\s*---/
-  let match = frontmatterRegex.exec(fileContent)
-  let frontMatterBlock = match![1]
-  let content = fileContent.replace(frontmatterRegex, '').trim()
-  let frontMatterLines = frontMatterBlock.trim().split('\n')
-  let metadata: Partial<Metadata> = {}
-
-  frontMatterLines.forEach((line) => {
-    let [key, ...valueArr] = line.split(': ')
-    let value = valueArr.join(': ').trim()
-    value = value.replace(/^['"](.*)['"]$/, '$1') // Remove quotes
-    metadata[key.trim() as keyof Metadata] = value
-  })
-
-  return { metadata: metadata as Metadata, content }
-}
-
-function getMDXFiles(dir) {
+function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx')
 }
 
-function readMDXFile(filePath) {
-  let rawContent = fs.readFileSync(filePath, 'utf-8')
-  return parseFrontmatter(rawContent)
+function readMDXFile(filePath: string) {
+  const rawContent = fs.readFileSync(filePath, 'utf-8')
+  const { data, content } = matter(rawContent)
+
+  return {
+    metadata: data as Metadata,
+    content,
+  }
 }
 
-function getMDXData(dir) {
-  let mdxFiles = getMDXFiles(dir)
+function getMDXData(dir: string) {
+  const mdxFiles = getMDXFiles(dir)
+
   return mdxFiles.map((file) => {
-    let { metadata, content } = readMDXFile(path.join(dir, file))
-    let slug = path.basename(file, path.extname(file))
+  const { metadata, content } = readMDXFile(path.join(dir, file))
+  const slug = path.basename(file, path.extname(file))
 
-    return {
-      metadata,
-      slug,
-      content,
-    }
-  })
-}
+  return {
+    metadata: {
+      ...metadata,
+      tags: normalizeTags(metadata.tags),
+    },
+    slug,
+    content,
+  }
+})}
 
 export function getBlogPosts() {
   return getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'))
@@ -92,4 +79,12 @@ export function formatDate(date: string, includeRelative = false) {
   }
 
   return `${fullDate} (${formattedDate})`
+}
+
+function normalizeTags(tags: unknown): string[] {
+  if (!Array.isArray(tags)) return []
+
+  return [...tags].sort((a, b) =>
+    a.localeCompare(b)
+  )
 }
