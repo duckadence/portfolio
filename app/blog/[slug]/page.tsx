@@ -90,18 +90,21 @@ export default function Blog({ params }) {
         {post.metadata.title}
       </h1>
 	  
-		<div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-1">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-2 py-1 text-xs leading-none"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+	<div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-2 mb-4">
+  {tags.map((tag) => (
+    <span
+      key={tag}
+      className="!bg-slate-200/50 dark:!bg-slate-800/50 
+                 !text-slate-600 dark:!text-slate-400 
+                 border border-slate-300/30 dark:border-slate-700/30
+                 rounded-md px-2 py-1 text-[10px] uppercase tracking-wider leading-none font-medium"
+    >
+      {tag}
+    </span>
+  ))}
+</div> 
+	<div className="flex justify-between items-center mt-2 mb-8 text-sm">
+        <p className="text-sm text-neutral-600 !dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}
         </p>
       </div>

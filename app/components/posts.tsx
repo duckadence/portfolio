@@ -48,17 +48,19 @@ export function BlogPosts({ limit, showViewAll = false }: {
   font-medium w-fit">
   {post.metadata.title}
 </p>
-                <div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-0.5">
-                  {tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="bg-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 rounded-md px-2 py-1 text-xs"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
+               <div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-1.5">
+  {tags.map((tag) => (
+    <span
+      key={tag}
+      className="!bg-slate-200/50 dark:!bg-slate-800/40 
+                 !text-slate-600 dark:!text-slate-400 
+                 border border-slate-300/30 dark:border-slate-700/30
+                 rounded-md px-2 py-0.5 text-[10px] uppercase tracking-wider leading-none font-medium"
+    >
+      {tag}
+    </span>
+  ))}
+</div>
                 {post.metadata.image && !showViewAll && (
                   <div className="relative w-full aspect-video overflow-hidden mt-1.5">
                     <Image

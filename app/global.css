@@ -154,10 +154,6 @@ footer p {
   @apply m-0;
 }
 
-.prose p, .prose li, .prose h1, .prose h2, .prose h3 {
-  @apply text-slate-900;
-}
-
 /*
 .prose h1 {
   @apply text-4xl font-medium tracking-tight mt-6 mb-2;
@@ -275,19 +271,35 @@ nav a:hover .nav-link-text {
 }
 
 .fade-in-start {
-  /* Initial state: Hidden */
-  clip-path: inset(0 0 100% 0); 
+  /* 1. Lock the container to exactly one screen */
+  height: 100vh;
+  max-height: 100vh;
+  width: 100%;
   
-  /* The Wipe Animation: 
-     Steps(20) makes it look like it's loading row-by-row like an old terminal.
-     If you want it smooth, change 'steps(20)' to 'ease-in-out'. 
-  */
-  animation: 
-    scanline 0.6s steps(20) forwards,
-    text-flicker 0.1s infinite;
-    
-  /* Ensures the animation stays finished at the end */
-  animation-fill-mode: forwards;
+  /* 2. Hide the 'Ghost' content that causes the over-scrolling */
+  overflow: hidden; 
+
+  /* 3. The Scanline - using 'fixed' logic via inset */
+  clip-path: inset(0 0 100% 0);
+  animation: scanline 0.8s linear forwards;
+  
+  /* 4. Smooth out the hardware rendering */
+  position: relative;
+  z-index: 1;
+}
+
+/* Once the animation FINISHES, we need to allow scrolling again 
+   otherwise the user is stuck on the top of the page forever. 
+*/
+.fade-in-finished {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* This creates a specific class JUST for terminal-style text */
+.terminal-text {
+  animation: text-flicker 0.1s infinite;
 }
 
 /* Ensure the Engineering Grid from your previous CSS uses the new colors */
