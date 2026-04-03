@@ -5,36 +5,6 @@
   color: #fefefe;
 }
 
-/*
-:root {
-  --sh-class: #2d5e9d;
-  --sh-identifier: #354150;
-  --sh-sign: #8996a3;
-  --sh-string: #007f7a;
-  --sh-keyword: #e02518;
-  --sh-comment: #a19595;
-  --sh-jsxliterals: #6266d1;
-  --sh-property: #e25a1c;
-  --sh-entity: #e25a1c;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sh-class: #4c97f8;
-    --sh-identifier: white;
-    --sh-keyword: #f47067;
-    --sh-string: #0fa295;
-  }
-  html {
-    color-scheme: dark;
-  }
-}
-
-html {
-  min-width: 360px;
-}
-*/
-
 :root {
   /* High-contrast "Workstation" syntax colors */
   --sh-class: #2d5e9d;
@@ -46,7 +16,7 @@ html {
   --sh-jsxliterals: #6266d1;
   --sh-property: #e25a1c;
   --sh-entity: #e25a1c;
-  background-color: #fefefe;
+  background-color: #f9fafb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -64,15 +34,37 @@ html {
 
 html {
   min-width: 360px;
-  /* ADD: The Engineering Grid */
-  background-image: radial-gradient(circle, #888888 0px, transparent 1px);
+  /* Change dot color from #888 (too dark) to #d1d5db (subtle) */
+  background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
   background-size: 32px 32px;
   background-attachment: fixed;
+  /* Ensure text isn't pure black */
+  color: #111827; 
 }
 
+/* LIGHT MODE: High-contrast neutral */
+h1, h2, h3, .title {
+  @apply !text-slate-900;
+}
+
+p, li {
+  @apply !text-slate-800;
+}
+
+/* DARK MODE: High-contrast neutral */
 @media (prefers-color-scheme: dark) {
-  html {
-    background-image: radial-gradient(circle, #222222 1px, transparent 1px);
+  h1, h2, h3, .title {
+    @apply !text-slate-50;
+  }
+  
+  p, li, .prose {
+    @apply !text-slate-200;
+  }
+
+  /* Reset any syntax-highlighter variables that might be turning text blue */
+  :root {
+    --sh-identifier: #f8fafc !important; /* Forces identifiers to white */
+    --sh-keyword: #60a5fa !important;    /* Forces keywords to a bright blue */
   }
 }
 
@@ -95,22 +87,38 @@ html {
   @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
 }
 */
-.prose a {
+/* 1. The Universal Link Style */
+.prose a, 
+nav a, 
+footer a {
   @apply underline transition-all decoration-[#0070f3] dark:decoration-[#3291ff] underline-offset-4 decoration-[1px] font-medium;
 }
 
-.prose a:hover {
+/* 2. The Universal Hover State */
+.prose a:hover, 
+nav a:hover, 
+footer a:hover {
   @apply text-[#0070f3] dark:text-[#3291ff] bg-[#0070f3]/5;
+  text-decoration-thickness: 2px;
 }
+
+/* 3. Structural UI specific: Lowercase & Tight */
+nav a, 
+footer a,
+footer p {
+  @apply lowercase tracking-tight;
+}
+
+/* 4. Fix for Navigation Padding */
+/* Since nav links have px-2, the underline might look too wide. 
+   If you want the underline to only be as wide as the text, 
+   wrap the {name} in a <span> like we did in the footer. */
 
 .prose .anchor:after {
   @apply text-neutral-300 dark:text-neutral-700;
   content: '#';
 }
 
-.prose *:hover > .anchor {
-  @apply visible;
-}
 /*
 .prose pre {
   @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm;
@@ -146,8 +154,8 @@ html {
   @apply m-0;
 }
 
-.prose p {
-  @apply my-4 text-neutral-800 dark:text-neutral-200;
+.prose p, .prose li, .prose h1, .prose h2, .prose h3 {
+  @apply text-slate-900;
 }
 
 /*
@@ -165,22 +173,18 @@ html {
 */
 .prose h1 {
   /* Bold, uppercase, and tight - looks like a serial number or device name */
-  @apply text-3xl font-bold tracking-tighter mt-10 mb-4 uppercase text-neutral-900 dark:text-neutral-100;
+  @apply text-2xl font-bold tracking-tighter mt-10 mb-4 text-neutral-900 dark:text-neutral-100;
   border-bottom: none; /* Explicitly removing the underline */
 }
 
 .prose h2 {
   /* Slightly smaller but still bold and industrial */
-  @apply text-xl font-bold tracking-tight mt-8 mb-3 uppercase text-neutral-700 dark:text-neutral-300;
+  @apply text-xl font-bold tracking-tight mt-8 mb-3 text-neutral-800 dark:text-neutral-200;
 }
 
 .prose h3 {
   /* Sub-headers feel like menu categories */
-  @apply text-lg font-semibold tracking-wide mt-6 mb-2 uppercase text-neutral-500 dark:text-neutral-500;
-}
-
-.prose h4 {
-  @apply text-lg font-medium tracking-tight mt-6 mb-2;
+  @apply text-lg font-semibold tracking-wide mt-6 mb-2 text-neutral-700 dark:text-neutral-300;
 }
 
 .prose strong {
@@ -229,4 +233,99 @@ table {
   text-wrap: pretty;
 }
 
+/* 1. Reset the parent Link so it doesn't show the underline/background */
+nav a {
+  @apply !no-underline !bg-transparent;
+}
 
+/* 2. Style the inner span for a surgical fit */
+.nav-link-text {
+  /* underline-offset-2 or 4 depends on how close you want the line */
+  @apply underline transition-all decoration-[#0070f3] dark:decoration-[#3291ff] 
+         underline-offset-[4px] decoration-[1px] font-medium 
+         px-1 rounded-sm leading-tight inline-block;
+}
+
+/* 3. The Hover State - Targets the span when the link is hovered */
+nav a:hover .nav-link-text {
+  @apply text-[#0070f3] dark:text-[#3291ff] bg-[#0070f3]/10;
+  text-decoration-thickness: 1px;
+}
+
+@keyframes scanline {
+  0% {
+    clip-path: inset(0 0 100% 0); /* Hidden */
+    opacity: 0;
+  }
+  10% {
+    opacity: 1; /* Quick flicker on */
+  }
+  100% {
+    clip-path: inset(0 0 0 0); /* Fully revealed */
+    opacity: 1;
+  }
+}
+
+@keyframes text-flicker {
+  0% { opacity: 0.98; }
+  5% { opacity: 1; }
+  10% { opacity: 0.95; }
+  15% { opacity: 0.99; }
+  100% { opacity: 1; }
+}
+
+.fade-in-start {
+  /* Initial state: Hidden */
+  clip-path: inset(0 0 100% 0); 
+  
+  /* The Wipe Animation: 
+     Steps(20) makes it look like it's loading row-by-row like an old terminal.
+     If you want it smooth, change 'steps(20)' to 'ease-in-out'. 
+  */
+  animation: 
+    scanline 0.6s steps(20) forwards,
+    text-flicker 0.1s infinite;
+    
+  /* Ensures the animation stays finished at the end */
+  animation-fill-mode: forwards;
+}
+
+/* Ensure the Engineering Grid from your previous CSS uses the new colors */
+html {
+  min-width: 360px;
+  background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-attachment: fixed;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-image: radial-gradient(circle, #1e293b 1px, transparent 1px);
+  }
+}
+
+/* 1. Reset the parent Link so it doesn't force blue */
+nav a {
+  @apply !text-inherit !no-underline !bg-transparent;
+}
+
+/* 2. Style the inner span - DEFAULT STATE */
+.nav-link-text {
+  @apply !text-slate-900 dark:!text-slate-100 transition-all 
+         underline decoration-[#0070f3] dark:decoration-[#3291ff] 
+         underline-offset-[4px] decoration-[1px] font-medium 
+         px-1 rounded-sm leading-tight inline-block;
+}
+
+/* 3. HOVER STATE - Triggered when the Link (group) is hovered */
+nav a:hover .nav-link-text {
+  @apply !text-[#0070f3] dark:!text-[#3291ff] !bg-[#0070f3]/10;
+  text-decoration-thickness: 2px !important;
+}
+
+.nav-link-text {
+  @apply !text-slate-900 dark:!text-slate-100 transition-all 
+         underline decoration-[#0070f3] dark:decoration-[#3291ff] 
+         underline-offset-[4px] decoration-[1px] font-medium 
+         px-0 rounded-none leading-tight inline-block;
+}

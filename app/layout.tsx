@@ -10,6 +10,10 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
 
+import PageAnimate from './components/page-animate'; // Import the new component
+const cx = (...classes: (string | boolean | undefined)[]) => 
+  classes.filter(Boolean).join(' ');
+
 /** * 2. CONFIGURE FONTS
  * Add fonts here as needed.
  */
@@ -60,8 +64,6 @@ export const metadata: Metadata = {
   },
 }
 
-const cx = (...classes) => classes.filter(Boolean).join(' ')
-
 export default function RootLayout({
   children,
 }: {
@@ -71,20 +73,24 @@ export default function RootLayout({
     <html
       lang="en"
       className={cx(
-        'text-black bg-white dark:text-white dark:bg-black',
-		activeFont.variable,
-		activeFont.className
+        'text-slate-900 bg-[#f9fafb] dark:text-slate-100 dark:bg-[#0a0a0c]',
+        activeFont.variable,
+        activeFont.className
       )}
     >
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <Navbar />
-          {children}
+          
+          {/* Use the wrapper here to trigger the animation on route change */}
+          <PageAnimate>
+            {children}
+          </PageAnimate>
+
           <Footer />
-          <Analytics />
-          <SpeedInsights />
         </main>
       </body>
     </html>
-  )
+  );
 }
+

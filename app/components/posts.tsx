@@ -25,26 +25,34 @@ export function BlogPosts({ limit, showViewAll = false }: {
         return (
           <Link
             key={post.slug}
-            className="flex flex-col mb-7 group"
+            className="flex flex-col mb-7 group" 
             href={`/blog/${post.slug}`}
           >
             <div className="grid grid-cols-[80px_1fr] gap-x-7">
-              {/* Column 1: Date */}
               <p className="text-neutral-500 dark:text-neutral-400 tabular-nums">
                 {formatDate(post.metadata.publishedAt, false)}
               </p>
 
-              {/* Column 2: Content Stack */}
               <div className="flex flex-col gap-1">
-                <p className="text-neutral-900 dark:text-neutral-100">
-                  {post.metadata.title}
-                </p>
-
+                {/* POST TITLE: Added underline, transition, and background tint on group-hover */}
+              <p className="!text-slate-900 dark:!text-slate-100 transition-all duration-200 
+  /* Hover colors */
+  group-hover:!text-[#0070f3] dark:group-hover:!text-[#3291ff]
+  group-hover:bg-[#0070f3]/10 dark:group-hover:bg-[#3291ff]/15
+  
+  /* Reset spacing to 0 */
+  px-0 m-0 rounded-none
+  
+  /* Underline */
+  underline decoration-[#0070f3] dark:decoration-[#3291ff] underline-offset-4 decoration-[1px] 
+  font-medium w-fit">
+  {post.metadata.title}
+</p>
                 <div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-0.5">
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-2 py-1 text-xs"
+                      className="bg-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 rounded-md px-2 py-1 text-xs"
                     >
                       {tag}
                     </span>
@@ -68,12 +76,13 @@ export function BlogPosts({ limit, showViewAll = false }: {
       })}
 
       {showViewAll && (
-        <div className="mt-4">
+        <div className="flex justify-end mt-7">
           <Link
             href="/blog"
-            className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition"
+            /* VIEW ALL BUTTON: Now matches your global link styling */
+            className="transition-all decoration-[#0070f3] dark:decoration-[#3291ff] underline-offset-4 decoration-[1px] font-medium text-neutral-600 dark:text-neutral-400 hover:text-[#0070f3] dark:hover:text-[#3291ff] hover:bg-[#0070f3]/5 underline lowercase tracking-tight"
           >
-            See all projects →
+            see all projects →
           </Link>
         </div>
       )}
