@@ -36,15 +36,15 @@ export function BlogPosts({ limit, showViewAll = false }: {
 
               {/* Column 2: Content Stack */}
               <div className="flex flex-col gap-1">
-                <p className="text-neutral-900 dark:text-neutral-100 tracking-tight">
+                <p className="text-neutral-900 dark:text-neutral-100">
                   {post.metadata.title}
                 </p>
 
-                <div className="flex flex-wrap gap-x-1 gap-y-1.5">
+                <div className="flex flex-wrap justify-start gap-x-1 gap-y-1.5 mt-0.5">
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-2 py-1 text-[13px] leading-none flex items-center justify-center"
+                      className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-2 py-1 text-xs"
                     >
                       {tag}
                     </span>

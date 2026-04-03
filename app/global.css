@@ -5,6 +5,7 @@
   color: #fefefe;
 }
 
+/*
 :root {
   --sh-class: #2d5e9d;
   --sh-identifier: #354150;
@@ -32,6 +33,48 @@
 html {
   min-width: 360px;
 }
+*/
+
+:root {
+  /* High-contrast "Workstation" syntax colors */
+  --sh-class: #2d5e9d;
+  --sh-identifier: #354150;
+  --sh-sign: #8996a3;
+  --sh-string: #008000; /* Classic Green */
+  --sh-keyword: #0000ff; /* Classic Blue */
+  --sh-comment: #a19595;
+  --sh-jsxliterals: #6266d1;
+  --sh-property: #e25a1c;
+  --sh-entity: #e25a1c;
+  background-color: #fefefe;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sh-class: #4c97f8;
+    --sh-identifier: #f8fafc;
+    --sh-keyword: #60a5fa; /* Neon Blue */
+    --sh-string: #4ade80; /* Neon Green */
+    background-color: #050505; /* True Black */
+  }
+  html {
+    color-scheme: dark;
+  }
+}
+
+html {
+  min-width: 360px;
+  /* ADD: The Engineering Grid */
+  background-image: radial-gradient(circle, #888888 0px, transparent 1px);
+  background-size: 32px 32px;
+  background-attachment: fixed;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-image: radial-gradient(circle, #222222 1px, transparent 1px);
+  }
+}
 
 .prose .anchor {
   @apply absolute invisible no-underline;
@@ -47,8 +90,17 @@ html {
   @apply visible;
 }
 
+/*
 .prose a {
   @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
+}
+*/
+.prose a {
+  @apply underline transition-all decoration-[#0070f3] dark:decoration-[#3291ff] underline-offset-4 decoration-[1px] font-medium;
+}
+
+.prose a:hover {
+  @apply text-[#0070f3] dark:text-[#3291ff] bg-[#0070f3]/5;
 }
 
 .prose .anchor:after {
@@ -59,13 +111,24 @@ html {
 .prose *:hover > .anchor {
   @apply visible;
 }
-
+/*
 .prose pre {
   @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm;
 }
 
 .prose code {
   @apply px-1 py-0.5 rounded-lg;
+}
+*/
+
+.prose pre {
+  /* Replace your pre block with this */
+  @apply bg-neutral-50 dark:bg-neutral-900 rounded-sm overflow-x-auto border border-neutral-300 dark:border-neutral-800 py-3 px-4 text-sm;
+}
+
+.prose code:not(pre code) {
+  /* Replace your code block with this */
+  @apply px-1.5 py-0.5 rounded-sm bg-neutral-200 dark:bg-neutral-800 font-mono text-[0.85em] border border-neutral-300 dark:border-neutral-700;
 }
 
 .prose pre code {
@@ -87,6 +150,7 @@ html {
   @apply my-4 text-neutral-800 dark:text-neutral-200;
 }
 
+/*
 .prose h1 {
   @apply text-4xl font-medium tracking-tight mt-6 mb-2;
 }
@@ -97,6 +161,22 @@ html {
 
 .prose h3 {
   @apply text-xl font-medium tracking-tight mt-6 mb-2;
+}
+*/
+.prose h1 {
+  /* Bold, uppercase, and tight - looks like a serial number or device name */
+  @apply text-3xl font-bold tracking-tighter mt-10 mb-4 uppercase text-neutral-900 dark:text-neutral-100;
+  border-bottom: none; /* Explicitly removing the underline */
+}
+
+.prose h2 {
+  /* Slightly smaller but still bold and industrial */
+  @apply text-xl font-bold tracking-tight mt-8 mb-3 uppercase text-neutral-700 dark:text-neutral-300;
+}
+
+.prose h3 {
+  /* Sub-headers feel like menu categories */
+  @apply text-lg font-semibold tracking-wide mt-6 mb-2 uppercase text-neutral-500 dark:text-neutral-500;
 }
 
 .prose h4 {
@@ -148,3 +228,5 @@ table {
 .title {
   text-wrap: pretty;
 }
+
+

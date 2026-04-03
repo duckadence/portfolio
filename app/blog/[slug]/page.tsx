@@ -94,7 +94,7 @@ export default function Blog({ params }) {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-1 pb-0.5"
+              className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-2 py-1 text-xs leading-none"
             >
               {tag}
             </span>
