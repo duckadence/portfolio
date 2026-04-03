@@ -34,12 +34,19 @@
 
 html {
   min-width: 360px;
-  /* Change dot color from #888 (too dark) to #d1d5db (subtle) */
-  background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+  /* Thin (1px) and Long (8px) Cross */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 12v8m-4-4h8' stroke='%23d1d5db' stroke-width='1' stroke-linecap='square'/%3E%3C/svg%3E");
   background-size: 32px 32px;
   background-attachment: fixed;
-  /* Ensure text isn't pure black */
   color: #111827; 
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+    /* Dark mode color: #1e293b */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 12v8m-4-4h8' stroke='%231e293b' stroke-width='1' stroke-linecap='square'/%3E%3C/svg%3E");
+  }
 }
 
 /* LIGHT MODE: High-contrast neutral */
@@ -82,11 +89,7 @@ p, li {
   @apply visible;
 }
 
-/*
-.prose a {
-  @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
-}
-*/
+
 /* 1. The Universal Link Style */
 .prose a, 
 nav a, 
@@ -119,16 +122,6 @@ footer p {
   content: '#';
 }
 
-/*
-.prose pre {
-  @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm;
-}
-
-.prose code {
-  @apply px-1 py-0.5 rounded-lg;
-}
-*/
-
 .prose pre {
   /* Replace your pre block with this */
   @apply bg-neutral-50 dark:bg-neutral-900 rounded-sm overflow-x-auto border border-neutral-300 dark:border-neutral-800 py-3 px-4 text-sm;
@@ -154,19 +147,6 @@ footer p {
   @apply m-0;
 }
 
-/*
-.prose h1 {
-  @apply text-4xl font-medium tracking-tight mt-6 mb-2;
-}
-
-.prose h2 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
-}
-
-.prose h3 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
-}
-*/
 .prose h1 {
   /* Bold, uppercase, and tight - looks like a serial number or device name */
   @apply text-2xl font-bold tracking-tighter mt-10 mb-4 text-neutral-900 dark:text-neutral-100;
@@ -246,20 +226,6 @@ nav a {
 nav a:hover .nav-link-text {
   @apply text-[#0070f3] dark:text-[#3291ff] bg-[#0070f3]/10;
   text-decoration-thickness: 1px;
-}
-
-/* Ensure the Engineering Grid from your previous CSS uses the new colors */
-html {
-  min-width: 360px;
-  background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
-  background-size: 32px 32px;
-  background-attachment: fixed;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    background-image: radial-gradient(circle, #1e293b 1px, transparent 1px);
-  }
 }
 
 /* 1. Reset the parent Link so it doesn't force blue */
