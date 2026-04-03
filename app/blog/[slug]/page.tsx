@@ -53,14 +53,14 @@ export function generateMetadata({ params }) {
 
 export default function Blog({ params }) {
   let post = getBlogPosts().find((post) => post.slug === params.slug)
-	
-  const tags = Array.isArray(post.metadata.tags)
-  ? post.metadata.tags
-  : []
 
   if (!post) {
     notFound()
   }
+
+  const tags = Array.isArray(post.metadata.tags)
+  ? post.metadata.tags
+  : []
 
   return (
     <section>
