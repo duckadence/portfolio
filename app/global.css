@@ -306,3 +306,43 @@ body {
   /* Helps the "thinner" engineering lines stay crisp */
   -webkit-font-smoothing: antialiased;
 }
+
+:root {
+  /* Light Mode: Slate 900 highlight with white text */
+  --selection-bg: #111827;
+  --selection-text: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode: Clean white highlight with black text */
+    --selection-bg: #f8fafc;
+    --selection-text: #050505;
+  }
+}
+
+/* --- RESPONSIVE NEUTRAL SELECTION --- */
+:root {
+  /* Light Mode: Deep Navy/Slate highlight (matches your h1) */
+  --selection-bg: #111827; 
+  --selection-text: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode: Crisp Slate-50 highlight with True Black text */
+    --selection-bg: #f8fafc;
+    --selection-text: #050505;
+  }
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* Firefox Support */
+::-moz-selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
