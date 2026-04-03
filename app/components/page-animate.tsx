@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
-export default function PageAnimate({ children }: { children: React.ReactNode }) {
+export default function PageAnimate({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const [isFinished, setIsFinished] = useState(false);
 
@@ -13,19 +17,18 @@ export default function PageAnimate({ children }: { children: React.ReactNode })
 
     const timer = setTimeout(() => {
       setIsFinished(true);
-    }, 1500); 
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [pathname]);
 
   return (
-    <div 
+    <div
       key={pathname}
       className={isFinished ? "fade-in-finished" : "fade-in-start"}
     >
-      <div className="flex flex-col min-h-0">
-        {children}
-      </div>
+      {/* Just a clean wrapper, no height constraints */}
+      <div className="w-full">{children}</div>
     </div>
   );
 }
