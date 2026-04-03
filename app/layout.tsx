@@ -2,8 +2,7 @@ import './global.css'
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-// 1. Import your Google Font options here
-import { IBM_Plex_Mono, Roboto_Mono, Space_Mono } from 'next/font/google'
+import { IBM_Plex_Mono, Inter, Space_Mono } from 'next/font/google'
 import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -14,24 +13,22 @@ import PageAnimate from './components/page-animate'; // Import the new component
 const cx = (...classes: (string | boolean | undefined)[]) => 
   classes.filter(Boolean).join(' ');
 
-/** * 2. CONFIGURE FONTS
- * Add fonts here as needed.
- */
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
   variable: '--font-ibm-plex',
 })
 
-const robotoMono = Roboto_Mono({
-  subsets: ['latin'],
-  variable: '--font-roboto',
-})
-
 const spaceMono = Space_Mono({
   subsets: ['latin'],
   weight: ['400', '700'],
   variable: '--font-space',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-univers-alt',
 })
 
 const activeFont = ibmPlexMono;

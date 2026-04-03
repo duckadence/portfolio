@@ -55,7 +55,7 @@ export function BlogPosts({ limit, showViewAll = false }: {
       className="!bg-slate-200/50 dark:!bg-slate-800/40 
                  !text-slate-600 dark:!text-slate-400 
                  border border-slate-300/30 dark:border-slate-700/30
-                 rounded-md px-2 py-0.5 text-[10px] uppercase tracking-wider leading-none font-medium"
+                 rounded-md px-2 py-1 text-[10px] uppercase tracking-wider leading-none font-medium"
     >
       {tag}
     </span>

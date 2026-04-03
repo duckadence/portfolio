@@ -293,3 +293,16 @@ nav a:hover .nav-link-text {
   overflow: visible !important;
   clip-path: none !important;
 }
+
+:root {
+  /* Use a slightly lighter weight (300 or 400) for that blueprint look */
+  --font-mono: var(--font-ibm-plex), monospace;
+}
+
+body {
+  font-family: var(--font-mono);
+  /* Engineering fonts look better with slightly more line height */
+  line-height: 1.6;
+  /* Helps the "thinner" engineering lines stay crisp */
+  -webkit-font-smoothing: antialiased;
+}
