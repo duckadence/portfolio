@@ -1,6 +1,13 @@
 import Link from 'next/link'
 
-const navItems = {
+// 1. Define the interface for your navigation items
+interface NavItem {
+  name: string;
+  external?: boolean; // The '?' means this is optional
+}
+
+// 2. Apply the type to your navItems object
+const navItems: Record<string, NavItem> = {
   '/': {
     name: 'home',
   },
@@ -9,7 +16,7 @@ const navItems = {
   },
   '/resume.pdf': {
     name: 'resume',
-	external: true,
+    external: true,
   },
 }
 
