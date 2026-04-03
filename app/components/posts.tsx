@@ -28,14 +28,14 @@ export function BlogPosts({ limit, showViewAll = false }: {
             className="flex flex-col mb-7 group"
             href={`/blog/${post.slug}`}
           >
-            <div className="grid grid-cols-[80px_1fr] gap-x-6">
+            <div className="grid grid-cols-[80px_1fr] gap-x-7">
               {/* Column 1: Date */}
               <p className="text-neutral-500 dark:text-neutral-400 tabular-nums">
                 {formatDate(post.metadata.publishedAt, false)}
               </p>
 
               {/* Column 2: Content Stack */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 <p className="text-neutral-900 dark:text-neutral-100 tracking-tight">
                   {post.metadata.title}
                 </p>
@@ -44,7 +44,7 @@ export function BlogPosts({ limit, showViewAll = false }: {
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-1 pb-0.5 text-xs"
+                      className="bg-neutral-300 dark:bg-neutral-700 rounded-md px-2 py-1 text-[13px] leading-none flex items-center justify-center"
                     >
                       {tag}
                     </span>
@@ -52,7 +52,7 @@ export function BlogPosts({ limit, showViewAll = false }: {
                 </div>
 
                 {post.metadata.image && !showViewAll && (
-                  <div className="relative w-full aspect-video overflow-hidden mt-2">
+                  <div className="relative w-full aspect-video overflow-hidden mt-1.5">
                     <Image
                       src={post.metadata.image}
                       alt={post.metadata.title}
