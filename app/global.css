@@ -288,8 +288,12 @@ nav a svg {
 
 /* Code Blocks */
 .prose pre {
-    @apply bg-neutral-50 dark:bg-neutral-900 rounded-sm overflow-x-auto
+    @apply bg-neutral-50 dark:bg-neutral-900 overflow-x-auto
           border border-neutral-300 dark:border-neutral-800 py-3 px-4 text-sm;
+
+    /* Change rounded-sm to rounded-xl or a custom value */
+    border-radius: 12px;
+
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -300,6 +304,24 @@ nav a svg {
 .prose code:not(pre code) {
     @apply px-1.5 py-0.5 rounded-sm bg-neutral-200 dark:bg-neutral-800
           font-mono text-[0.85em] border border-neutral-300 dark:border-neutral-700;
+}
+
+.prose iframe,
+.prose video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    @apply dark:border-neutral-800;
+
+    /* THE BLUR FIXES: */
+    overflow: hidden; /* Clips the video to the radius */
+    isolation: isolate; /* Prevents pixel bleeding with background */
+    backface-visibility: hidden; /* Forces integer pixel alignment */
+    transform: translateZ(0); /* Triggers GPU hardware acceleration */
+
+    /* Ensure no browser-added background colors leak out */
+    background-color: transparent;
 }
 
 /* ==========================================================================
