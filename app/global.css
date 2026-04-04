@@ -1,273 +1,252 @@
 @import "tailwindcss";
 
-::selection {
-    background-color: #47a3f3;
-    color: #fefefe;
-}
+/* ==========================================================================
+  1. VARIABLES & TOKENS
+  ==========================================================================
+*/
 
 :root {
     /* High-contrast "Workstation" syntax colors */
     --sh-class: #2d5e9d;
     --sh-identifier: #354150;
     --sh-sign: #8996a3;
-    --sh-string: #008000; /* Classic Green */
-    --sh-keyword: #0000ff; /* Classic Blue */
+    --sh-string: #008000;
+    --sh-keyword: #0000ff;
     --sh-comment: #a19595;
     --sh-jsxliterals: #6266d1;
     --sh-property: #e25a1c;
     --sh-entity: #e25a1c;
-    background-color: #f9fafb;
+
+    /* UI Colors */
+    --selection-bg: #111827;
+    --selection-text: #ffffff;
+    --bg-color: #f9fafb;
+
+    /* Grid settings */
+    --clear-width: 300px;
+    --font-mono: var(--font-ibm-plex), monospace;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --sh-class: #4c97f8;
-        --sh-identifier: #f8fafc;
-        --sh-keyword: #60a5fa; /* Neon Blue */
-        --sh-string: #4ade80; /* Neon Green */
-        background-color: #050505; /* True Black */
-    }
-    html {
-        color-scheme: dark;
+        --sh-identifier: #f8fafc !important;
+        --sh-keyword: #60a5fa !important;
+        --sh-string: #4ade80;
+
+        --selection-bg: #f8fafc;
+        --selection-text: #050505;
+        --bg-color: #050505;
     }
 }
 
+/* ==========================================================================
+  2. BASE STYLES
+  ==========================================================================
+*/
+
 html {
     min-width: 360px;
-    /* Thin (1px) and Long (8px) Cross */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 12v8m-4-4h8' stroke='%23d1d5db' stroke-width='1' stroke-linecap='square'/%3E%3C/svg%3E");
-    background-size: 32px 32px;
-    background-attachment: fixed;
+    background-color: var(--bg-color);
     color: #111827;
+    scroll-behavior: smooth;
 }
 
 @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;
-        /* Dark mode color: #1e293b */
+    }
+}
+
+body {
+    font-family: var(--font-mono);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--bg-color);
+}
+
+/* ==========================================================================
+  3. BACKGROUND GRID (The "Workstation" Blueprint)
+  ==========================================================================
+*/
+
+html::before {
+    content: "";
+    position: fixed; /* Keeps the grid locked to the background */
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    /* Grid SVG */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 12v8m-4-4h8' stroke='%23d1d5db' stroke-width='1' stroke-linecap='square'/%3E%3C/svg%3E");
+    background-size: 32px 32px;
+
+    /* THE HORIZONTAL FADE:
+     This creates a vertical 'lane' of transparency.
+     - 50% is the center.
+     - 400px (var) is the total width of the 'clear' area.
+     - The 150px addition creates the 'fade' transition.
+  */
+    --lane-width: 300px;
+
+    mask-image: linear-gradient(
+        to right,
+        black 0%,
+        black calc(50% - var(--lane-width) - 150px),
+        transparent calc(50% - var(--lane-width)),
+        transparent calc(50% + var(--lane-width)),
+        black calc(50% + var(--lane-width) + 150px),
+        black 100%
+    );
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        black 0%,
+        black calc(50% - var(--lane-width) - 150px),
+        transparent calc(50% - var(--lane-width)),
+        transparent calc(50% + var(--lane-width)),
+        black calc(50% + var(--lane-width) + 150px),
+        black 100%
+    );
+}
+
+/* Dark mode adjustment for the grid lines */
+@media (prefers-color-scheme: dark) {
+    html::before {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 12v8m-4-4h8' stroke='%231e293b' stroke-width='1' stroke-linecap='square'/%3E%3C/svg%3E");
     }
 }
 
-/* LIGHT MODE: High-contrast neutral */
-h1,
-h2,
-h3,
-.title {
-    @apply !text-slate-900;
+/* ==========================================================================
+  4. GLOBAL TYPOGRAPHY
+  ==========================================================================
+*/
+
+/* :where() allows these to be easily overridden by Tailwind classes */
+:where(h1, h2, h3, .title) {
+    @apply text-slate-900 dark:text-slate-50;
 }
 
-p,
-li {
-    @apply !text-slate-800;
-}
-
-/* DARK MODE: High-contrast neutral */
-@media (prefers-color-scheme: dark) {
-    h1,
-    h2,
-    h3,
-    .title {
-        @apply !text-slate-50;
-    }
-
-    p,
-    li,
-    .prose {
-        @apply !text-slate-200;
-    }
-
-    /* Reset any syntax-highlighter variables that might be turning text blue */
-    :root {
-        --sh-identifier: #f8fafc !important; /* Forces identifiers to white */
-        --sh-keyword: #60a5fa !important; /* Forces keywords to a bright blue */
-    }
-}
-
-.prose .anchor {
-    @apply absolute invisible no-underline;
-
-    margin-left: -1em;
-    padding-right: 0.5em;
-    width: 80%;
-    max-width: 700px;
-    cursor: pointer;
-}
-
-.anchor:hover {
-    @apply visible;
-}
-
-/* 1. The Universal Link Style */
-.prose a,
-nav a,
-footer a {
-    @apply underline transition-all decoration-[#0070f3] dark:decoration-[#3291ff] underline-offset-4 decoration-[1px] font-medium;
-}
-
-/* 2. The Universal Hover State */
-.prose a:hover,
-nav a:hover,
-footer a:hover {
-    @apply text-[#0070f3] dark:text-[#3291ff] bg-[#0070f3]/5;
-    text-decoration-thickness: 2px;
-}
-
-/* 3. Structural UI specific: Lowercase & Tight */
-nav a,
-footer a,
-footer p {
-    @apply lowercase tracking-tight;
-}
-
-/* 4. Fix for Navigation Padding */
-/* Since nav links have px-2, the underline might look too wide.
-   If you want the underline to only be as wide as the text,
-   wrap the {name} in a <span> like we did in the footer. */
-
-.prose .anchor:after {
-    @apply text-neutral-300 dark:text-neutral-700;
-    content: "#";
-}
-
-.prose pre {
-    /* Replace your pre block with this */
-    @apply bg-neutral-50 dark:bg-neutral-900 rounded-sm overflow-x-auto border border-neutral-300 dark:border-neutral-800 py-3 px-4 text-sm;
-}
-
-.prose code:not(pre code) {
-    /* Replace your code block with this */
-    @apply px-1.5 py-0.5 rounded-sm bg-neutral-200 dark:bg-neutral-800 font-mono text-[0.85em] border border-neutral-300 dark:border-neutral-700;
-}
-
-.prose pre code {
-    @apply p-0;
-    border: initial;
-    line-height: 1.5;
-}
-
-.prose code span {
-    @apply font-medium;
-}
-
-.prose img {
-    /* Don't apply styles to next/image */
-    @apply m-0;
-}
-
-.prose h1 {
-    /* Bold, uppercase, and tight - looks like a serial number or device name */
-    @apply text-2xl font-bold tracking-tighter mt-10 mb-4 text-neutral-900 dark:text-neutral-100;
-    border-bottom: none; /* Explicitly removing the underline */
-}
-
-.prose h2 {
-    /* Slightly smaller but still bold and industrial */
-    @apply text-xl font-bold tracking-tight mt-8 mb-3 text-neutral-800 dark:text-neutral-200;
-}
-
-.prose h3 {
-    /* Sub-headers feel like menu categories */
-    @apply text-lg font-semibold tracking-wide mt-6 mb-2 text-neutral-700 dark:text-neutral-300;
-}
-
-.prose strong {
-    @apply font-bold;
-}
-
-.prose ul {
-    @apply list-disc pl-6;
-}
-
-.prose ol {
-    @apply list-decimal pl-6;
-}
-
-.prose > :first-child {
-    /* Override removing top margin, causing layout shift */
-    margin-top: 1.25em !important;
-    margin-bottom: 1.25em !important;
-}
-
-pre::-webkit-scrollbar {
-    display: none;
-}
-
-pre {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-}
-
-/* Remove Safari input shadow on mobile */
-input[type="text"],
-input[type="email"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-table {
-    display: block;
-    max-width: fit-content;
-    overflow-x: auto;
-    white-space: nowrap;
+:where(p, li) {
+    @apply text-slate-800 dark:text-slate-200;
 }
 
 .title {
     text-wrap: pretty;
 }
 
-/* 1. Reset the parent Link so it doesn't show the underline/background */
-nav a {
-    @apply !no-underline !bg-transparent;
+/* Selection Styles */
+::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+}
+::-moz-selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
 }
 
-/* 2. Style the inner span for a surgical fit */
-.nav-link-text {
-    /* underline-offset-2 or 4 depends on how close you want the line */
-    @apply underline transition-all decoration-[#0070f3] dark:decoration-[#3291ff]
-         underline-offset-[4px] decoration-[1px] font-medium
-         px-1 rounded-sm leading-tight inline-block;
+/* ==========================================================================
+  5. NAVIGATION & LINKS
+  ==========================================================================
+*/
+
+/* Reset all container links */
+nav a,
+footer a,
+.see-all-link {
+    @apply !no-underline !bg-transparent lowercase tracking-tight;
 }
 
-/* 3. The Hover State - Targets the span when the link is hovered */
-nav a:hover .nav-link-text {
-    @apply text-[#0070f3] dark:text-[#3291ff] bg-[#0070f3]/10;
+/* Target the text/icon container specifically */
+.nav-link-text,
+footer a,
+.see-all-link {
+    @apply inline-flex items-center gap-1.5 transition-all;
+    @apply text-slate-900 dark:text-slate-100;
+
+    /* FORCE UNDERLINE: Using standard CSS properties to bypass Tailwind conflicts */
+    text-decoration: underline !important;
+    text-decoration-color: #0070f3 !important; /* Light Mode Blue */
+    text-underline-offset: 4px;
     text-decoration-thickness: 1px;
 }
 
-/* 1. Reset the parent Link so it doesn't force blue */
-nav a {
-    @apply !text-inherit !no-underline !bg-transparent;
+@media (prefers-color-scheme: dark) {
+    .nav-link-text,
+    footer a,
+    .see-all-link {
+        text-decoration-color: #3291ff !important; /* Dark Mode Blue */
+    }
 }
 
-/* 2. Style the inner span - DEFAULT STATE */
-.nav-link-text {
-    @apply !text-slate-900 dark:!text-slate-100 transition-all
-         underline decoration-[#0070f3] dark:decoration-[#3291ff]
-         underline-offset-[4px] decoration-[1px] font-medium
-         px-1 rounded-sm leading-tight inline-block;
-}
-
-/* 3. HOVER STATE - Triggered when the Link (group) is hovered */
-nav a:hover .nav-link-text {
+/* Hover States */
+nav a:hover .nav-link-text,
+footer a:hover,
+.see-all-link:hover {
     @apply !text-[#0070f3] dark:!text-[#3291ff] !bg-[#0070f3]/10;
     text-decoration-thickness: 2px !important;
 }
 
-.nav-link-text {
-    @apply !text-slate-900 dark:!text-slate-100 transition-all
-         underline decoration-[#0070f3] dark:decoration-[#3291ff]
-         underline-offset-[4px] decoration-[1px] font-medium
-         px-0 rounded-none leading-tight inline-block;
+/* ==========================================================================
+  6. PROSE & CONTENT (MDX)
+  ==========================================================================
+*/
+
+.prose h1 {
+    @apply text-2xl font-bold tracking-tighter mt-10 mb-4 border-none;
+}
+.prose h2 {
+    @apply text-xl font-bold tracking-tight mt-8 mb-3;
+}
+.prose h3 {
+    @apply text-lg font-semibold tracking-wide mt-6 mb-2;
+}
+.prose strong {
+    @apply font-bold;
+}
+.prose ul {
+    @apply list-disc pl-6;
+}
+.prose ol {
+    @apply list-decimal pl-6;
 }
 
-/* --- THE HORIZONTAL CURTAIN (NATURAL HEIGHT) --- */
+/* Link Styles within Prose */
+.prose a {
+    @apply underline transition-all decoration-[#0070f3] dark:decoration-[#3291ff]
+         underline-offset-4 decoration-[1px] font-medium;
+}
 
+.prose a:hover {
+    @apply text-[#0070f3] dark:text-[#3291ff] bg-[#0070f3]/5;
+    text-decoration-thickness: 2px;
+}
+
+/* Code Blocks */
+.prose pre {
+    @apply bg-neutral-50 dark:bg-neutral-900 rounded-sm overflow-x-auto
+         border border-neutral-300 dark:border-neutral-800 py-3 px-4 text-sm;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.prose pre::-webkit-scrollbar {
+    display: none;
+}
+
+.prose code:not(pre code) {
+    @apply px-1.5 py-0.5 rounded-sm bg-neutral-200 dark:bg-neutral-800
+         font-mono text-[0.85em] border border-neutral-300 dark:border-neutral-700;
+}
+
+/* ==========================================================================
+  7. UTILITIES & ANIMATIONS
+  ==========================================================================
+*/
+
+/* Horizontal Curtain Fade */
 .fade-in-start {
     display: block;
     width: 100%;
-    /* Remove 100vh - let the content define the height */
     overflow: hidden;
     clip-path: inset(0 100% 0 0);
     animation: horizontalCurtain 1.5s linear forwards;
@@ -275,7 +254,6 @@ nav a:hover .nav-link-text {
 
 .fade-in-finished {
     width: 100%;
-    /* Ensure it stays at natural height */
     height: auto;
     overflow: visible;
     clip-path: none;
@@ -297,55 +275,24 @@ nav a:hover .nav-link-text {
     }
 }
 
-:root {
-    /* Use a slightly lighter weight (300 or 400) for that blueprint look */
-    --font-mono: var(--font-ibm-plex), monospace;
+/* Helpers */
+.scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
 }
 
-body {
-    font-family: var(--font-mono);
-    /* Engineering fonts look better with slightly more line height */
-    line-height: 1.6;
-    /* Helps the "thinner" engineering lines stay crisp */
-    -webkit-font-smoothing: antialiased;
+table {
+    display: block;
+    max-width: fit-content;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
-:root {
-    /* Light Mode: Slate 900 highlight with white text */
-    --selection-bg: #111827;
-    --selection-text: #ffffff;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* Dark Mode: Clean white highlight with black text */
-        --selection-bg: #f8fafc;
-        --selection-text: #050505;
-    }
-}
-
-/* --- RESPONSIVE NEUTRAL SELECTION --- */
-:root {
-    /* Light Mode: Deep Navy/Slate highlight (matches your h1) */
-    --selection-bg: #111827;
-    --selection-text: #ffffff;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* Dark Mode: Crisp Slate-50 highlight with True Black text */
-        --selection-bg: #f8fafc;
-        --selection-text: #050505;
-    }
-}
-
-::selection {
-    background-color: var(--selection-bg);
-    color: var(--selection-text);
-}
-
-/* Firefox Support */
-::-moz-selection {
-    background-color: var(--selection-bg);
-    color: var(--selection-text);
+input[type="text"],
+input[type="email"] {
+    -webkit-appearance: none;
+    appearance: none;
 }
