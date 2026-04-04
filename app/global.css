@@ -150,41 +150,54 @@ html::before {
   ==========================================================================
 */
 
-/* Reset all container links */
 nav a,
 footer a,
+.footer-link,
 .see-all-link {
-    @apply !no-underline !bg-transparent lowercase tracking-tight;
-}
+    /* Use flex-nowrap to prevent the text from ever dropping below the icon */
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 8px;
 
-/* Target the text/icon container specifically */
-.nav-link-text,
-footer a,
-.see-all-link {
-    @apply inline-flex items-center gap-1.5 transition-all;
+    @apply transition-all lowercase tracking-tight no-underline;
     @apply text-slate-900 dark:text-slate-100;
 
-    /* FORCE UNDERLINE: Using standard CSS properties to bypass Tailwind conflicts */
-    text-decoration: underline !important;
-    text-decoration-color: #0070f3 !important; /* Light Mode Blue */
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
+    border-bottom: 1px solid #0070f3;
+    padding-bottom: 1px;
+    white-space: nowrap !important;
 }
 
 @media (prefers-color-scheme: dark) {
-    .nav-link-text,
+    nav a,
     footer a,
+    .footer-link,
     .see-all-link {
-        text-decoration-color: #3291ff !important; /* Dark Mode Blue */
+        border-bottom-color: #3291ff;
     }
 }
 
 /* Hover States */
-nav a:hover .nav-link-text,
+nav a:hover,
 footer a:hover,
+.footer-link:hover,
 .see-all-link:hover {
     @apply !text-[#0070f3] dark:!text-[#3291ff] !bg-[#0070f3]/10;
-    text-decoration-thickness: 2px !important;
+    border-bottom-width: 2px;
+    padding-bottom: 0px;
+}
+
+/* Ensure the span inside the link is also flexed horizontally */
+.nav-link-text {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    gap: inherit;
+}
+
+nav a svg {
+    display: block !important;
+    flex-shrink: 0 !important;
 }
 
 /* ==========================================================================
