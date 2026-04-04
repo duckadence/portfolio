@@ -205,15 +205,67 @@ nav a svg {
   ==========================================================================
 */
 
+/* --- 6a. Stepped Heading Dimming (100 Difference) --- */
+
 .prose h1 {
-    @apply text-2xl font-bold tracking-tighter mt-10 mb-4 border-none;
+    @apply text-slate-900 dark:text-slate-50 text-2xl font-bold tracking-tighter mt-10 mb-4 border-none;
 }
 .prose h2 {
-    @apply text-xl font-bold tracking-tight mt-8 mb-3;
+    @apply text-slate-800 dark:text-slate-200 text-xl font-bold tracking-tight mt-8 mb-3;
 }
 .prose h3 {
-    @apply text-lg font-semibold tracking-wide mt-6 mb-2;
+    @apply text-slate-700 dark:text-slate-300 text-lg font-semibold tracking-wide mt-6 mb-2;
 }
+.prose h4 {
+    @apply text-slate-600 dark:text-slate-400 font-semibold mt-4 mb-2;
+}
+.prose h5 {
+    @apply text-slate-500 dark:text-slate-500 font-medium mt-4 mb-2;
+}
+
+/* --- 6b. Anchor Link Logic --- */
+
+/* Container for the anchor */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5 {
+    @apply relative;
+}
+
+/* The invisible '#' link */
+.anchor {
+    @apply absolute invisible no-underline;
+    left: -1.25rem;
+    padding-right: 0.5rem;
+    width: 100%;
+    max-width: 700px;
+    cursor: pointer;
+}
+
+/* Injecting the '#' symbol */
+.anchor::after {
+    content: "#";
+    @apply text-neutral-300 dark:text-neutral-700;
+}
+
+/* Show on hover */
+:where(h1, h2, h3, h4, h5):hover > .anchor {
+    @apply visible;
+}
+
+.anchor:hover::after {
+    @apply text-[#0070f3] dark:text-[#3291ff];
+}
+
+/* Prevent heading from being cut off at the top when jumping to ID */
+[id]:target {
+    scroll-margin-top: 5rem;
+}
+
+/* --- 6c. Other Prose Elements --- */
+
 .prose strong {
     @apply font-bold;
 }
@@ -224,10 +276,9 @@ nav a svg {
     @apply list-decimal pl-6;
 }
 
-/* Link Styles within Prose */
 .prose a {
     @apply underline transition-all decoration-[#0070f3] dark:decoration-[#3291ff]
-         underline-offset-4 decoration-[1px] font-medium;
+          underline-offset-4 decoration-[1px] font-medium;
 }
 
 .prose a:hover {
@@ -238,7 +289,7 @@ nav a svg {
 /* Code Blocks */
 .prose pre {
     @apply bg-neutral-50 dark:bg-neutral-900 rounded-sm overflow-x-auto
-         border border-neutral-300 dark:border-neutral-800 py-3 px-4 text-sm;
+          border border-neutral-300 dark:border-neutral-800 py-3 px-4 text-sm;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -248,7 +299,7 @@ nav a svg {
 
 .prose code:not(pre code) {
     @apply px-1.5 py-0.5 rounded-sm bg-neutral-200 dark:bg-neutral-800
-         font-mono text-[0.85em] border border-neutral-300 dark:border-neutral-700;
+          font-mono text-[0.85em] border border-neutral-300 dark:border-neutral-700;
 }
 
 /* ==========================================================================
