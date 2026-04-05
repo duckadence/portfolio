@@ -17,12 +17,12 @@
     --sh-property: #e25a1c;
     --sh-entity: #e25a1c;
 
-    /* UI Colors */
-    --selection-bg: #111827;
+    --bg-color: #f5f5f0;
+    --selection-bg: #0070f3;
     --selection-text: #ffffff;
-    --bg-color: #f9fafb;
 
     /* Grid settings */
+    --grid-stroke: #e2e2d5;
     --clear-width: 300px;
     --font-mono: var(--font-ibm-plex), monospace;
 }
@@ -34,9 +34,10 @@
         --sh-keyword: #60a5fa !important;
         --sh-string: #4ade80;
 
-        --selection-bg: #f8fafc;
-        --selection-text: #050505;
-        --bg-color: #050505;
+        --bg-color: #0a0a0a;
+        --selection-text: #ffffff;
+        --bg-color: #0d1111; /* Gunmetal teal-black */
+        --grid-stroke: #1a1a1a;
     }
 }
 
@@ -92,10 +93,10 @@ html::before {
     mask-image: linear-gradient(
         to right,
         black 0%,
-        black calc(50% - var(--lane-width) - 400px),
+        black calc(50% - var(--lane-width) - var(--fade-strength)),
         transparent calc(50% - var(--lane-width)),
         transparent calc(50% + var(--lane-width)),
-        black calc(50% + var(--lane-width) + 400px),
+        black calc(50% + var(--lane-width) + var(--fade-strength)),
         black 100%
     );
 
@@ -160,11 +161,13 @@ footer a,
     flex-wrap: nowrap !important;
     gap: 8px;
 
-    @apply transition-all lowercase tracking-tight no-underline;
+    @apply transition-all lowercase tracking-tight;
     @apply text-slate-900 dark:text-slate-100;
 
+    /* Use border instead of text-decoration to include the icon */
+    text-decoration: none !important;
     border-bottom: 1px solid #0070f3;
-    padding-bottom: 1px;
+    padding-bottom: 2px; /* Slight breathing room for icons */
     white-space: nowrap !important;
 }
 
@@ -182,9 +185,14 @@ nav a:hover,
 footer a:hover,
 .footer-link:hover,
 .see-all-link:hover {
-    @apply !text-[#0070f3] dark:!text-[#3291ff] !bg-[#0070f3]/10;
+    @apply !text-[#0070f3] dark:!text-[#3291ff];
+
+    /* Matches the 'Antique' warmth logic */
+    background-color: rgba(0, 112, 243, 0.1);
+
+    /* Thicken the border line instead of using underline */
     border-bottom-width: 2px;
-    padding-bottom: 0px;
+    padding-bottom: 1px; /* Offset for the thicker border to prevent jumping */
 }
 
 /* Ensure the span inside the link is also flexed horizontally */
@@ -195,9 +203,62 @@ footer a:hover,
     gap: inherit;
 }
 
+/* Ensure icons are treated as part of the line container */
 nav a svg {
     display: block !important;
     flex-shrink: 0 !important;
+    /* Adjust vertical alignment if icon looks too high */
+    position: relative;
+    top: 1px;
+}
+
+/* ==========================================================================
+   5b. BLOG POST TITLES (Surgical Workstation Style)
+   ==========================================================================
+*/
+
+.post-title {
+    display: inline-block;
+    position: relative;
+    font-weight: 500;
+    /* Uses your sh-identifier variable for consistency */
+    color: var(--sh-identifier);
+
+    /* Precision alignment: px ensures underline width, mx keeps text aligned */
+    padding: 0 3px;
+    margin: 0 -3px;
+    border-radius: 2px;
+
+    /* Base Underline */
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    text-decoration-color: #0070f3;
+
+    transition: all 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .post-title {
+        text-decoration-color: #3291ff;
+    }
+}
+
+/* Hover State triggered by the parent .group (the Link in posts.tsx) */
+.group:hover .post-title {
+    /* The Blue Pop - !important ensures it beats the prose heading styles */
+    color: #0070f3 !important;
+    background-color: rgba(0, 112, 243, 0.2); /* Stronger pop for warm bg */
+
+    /* Thicken the line on hover */
+    text-decoration-thickness: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .group:hover .post-title {
+        color: #3291ff !important;
+        background-color: rgba(50, 145, 255, 0.25);
+    }
 }
 
 /* ==========================================================================

@@ -42,8 +42,8 @@ export function BlogPosts({
 
               <div className="flex flex-col gap-2">
                 {/* PROJECT TITLE: Surgical underline and blue tint on hover */}
-                <h3 className="w-fit font-medium text-slate-900 dark:text-slate-100 underline decoration-1 underline-offset-4 decoration-[#0070f3] dark:decoration-[#3291ff] transition-all duration-200 group-hover:bg-[#0070f3]/10 dark:group-hover:bg-[#3291ff]/15 group-hover:text-[#0070f3] dark:group-hover:text-[#3291ff]">
-                  {post.metadata.title}
+                <h3 className="transition-all duration-200">
+                  <span className="post-title">{post.metadata.title}</span>
                 </h3>
 
                 {/* TAGS: Micro-labels with subtle borders */}
