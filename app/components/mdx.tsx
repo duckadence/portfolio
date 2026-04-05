@@ -1,9 +1,9 @@
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import { highlight } from 'sugar-high'
-import { YouTubeComponent } from "./youtube"
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { highlight } from "sugar-high";
+import { YouTubeComponent } from "./youtube";
 
 function Table({ data }) {
   if (!data || !data.headers) return null;
@@ -37,30 +37,55 @@ function Callout(props) {
 }
 
 function CustomLink(props) {
-  let href = props.href
+  let href = props.href;
 
-  if (href.startsWith('/')) {
+  if (href.startsWith("/")) {
     return (
       <Link href={href} {...props}>
         {props.children}
       </Link>
-    )
+    );
   }
 
-  if (href.startsWith('#')) {
-    return <a {...props} />
+  if (href.startsWith("#")) {
+    return <a {...props} />;
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
+  return <a target="_blank" rel="noopener noreferrer" {...props} />;
 }
 
+// Function for a blank line (adjustable height)
+function Spacer({ size = 1 }) {
+  return <div style={{ height: `${size}rem` }} aria-hidden="true" />;
+}
+
+// Function to add subtext below images
+function FigCaption({ children }) {
+  return (
+    <span className="mt-2 block text-sm text-center text-neutral-500 dark:text-neutral-400">
+      {children}
+    </span>
+  );
+}
+
+// Updated Image component to optionally handle a caption
 function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />
+  const { alt, caption, ...rest } = props;
+  return (
+    <figure className="my-8">
+      <Image alt={alt} className="rounded-lg" {...rest} />
+      {caption && (
+        <figcaption className="mt-2 text-sm text-center text-neutral-500">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  );
 }
 
 function Code({ children, ...props }) {
-  let codeHTML = highlight(children)
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+  let codeHTML = highlight(children);
+  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
 function Strikethrough(props) {
@@ -72,32 +97,32 @@ function slugify(str) {
     .toString()
     .toLowerCase()
     .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters except for -
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/&/g, "-and-") // Replace & with 'and'
+    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
+    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
 }
 
 function createHeading(level) {
   const Heading = ({ children }) => {
-    let slug = slugify(children)
+    let slug = slugify(children);
     return React.createElement(
       `h${level}`,
       { id: slug },
       [
-        React.createElement('a', {
+        React.createElement("a", {
           href: `#${slug}`,
           key: `link-${slug}`,
-          className: 'anchor',
+          className: "anchor",
         }),
       ],
-      children
-    )
-  }
+      children,
+    );
+  };
 
-  Heading.displayName = `Heading${level}`
+  Heading.displayName = `Heading${level}`;
 
-  return Heading
+  return Heading;
 }
 
 let components = {
@@ -113,7 +138,9 @@ let components = {
   code: Code,
   Table,
   Callout,
-}
+  Spacer,
+  Caption: FigCaption,
+};
 
 export async function CustomMDX(props) {
   return (
@@ -121,5 +148,5 @@ export async function CustomMDX(props) {
       {...props}
       components={{ ...components, ...(props.components || {}) }}
     />
-  )
+  );
 }
