@@ -18,17 +18,40 @@ tags:
 
 # Project Overview
 ## Motivation
+This project was about building an underwater acoustic telemetry system for marine permaculture. The main goal was to transmit environmental data, like temperature, from a submerged seaweed platform up to the surface without using physical cables. This kind of system is useful because it avoids issues like entanglement and makes long-term monitoring more practical in ocean environments.
+
+![platform](/capstone/platform.png)
+
 ## Goals
+The system was designed with real-world constraints in mind, including operating at depth, handling long transmission distances, and staying relatively low-cost. The end result was a working prototype that demonstrated wireless underwater communication and basic closed-loop control.
 
 # Development
+Development was pretty iterative, starting with small-scale tests and gradually building up to more complete system integration. I first focused on validating that acoustic transmission was even feasible using the available piezoelectric components. From there, I built a tank-based prototype that tied together sensing, transmission, reception, and actuation into a full loop. Later testing in a pool helped evaluate how the system performed over longer distances.
+
+There were a few challenges along the way. One of the biggest issues was hardware limitations, especially not having access to a suitable piezo amplifier, which made it harder to test long-range communication. Budget constraints also meant I had to be selective about what components to use and often work with whatever was available.
+
+On the software side, reliably detecting signals in a noisy environment was tricky. I ended up using FFT-based methods to identify frequency components and decode the transmitted data, which worked reasonably well for a proof of concept. Integrating everything into a cohesive system—especially tying the communication into a control loop—was also a challenge, but it was one of the more rewarding parts once it came together.
 
 # System Design
+The system was split into two main parts: an underwater transmitter and a surface-level receiver and control unit. On the hardware side, the transmitter used an Arduino with temperature sensors, while the receiver was built around an STM32 to handle signal processing and control. Acoustic communication was handled using piezoelectric transducers acting as both emitter and hydrophone.
+
+On the software side, I implemented BFSK modulation to encode the sensor data and used FFT-based processing on the STM32 to decode incoming signals. The receiver then used this data to drive a control system that could adjust the depth of the platform.
+
+A lot of the design decisions were driven by constraints. Since wired communication wasn’t an option, acoustic transmission was the most practical alternative. Budget limitations also meant relying on accessible components and keeping the design as simple and modular as possible, while still being robust enough to work in a harsh underwater environment.
 ## Block Diagram
 ## Components
 ## Software
 
 # Results
+In the end, the system worked as a solid proof of concept. I was able to successfully transmit data acoustically in controlled environments and use that data to drive a simple control mechanism. The system performed reliably in both tank and pool tests, with transmission distances reaching around 57 meters.
+
+While this didn’t hit the original long-distance target, the results still showed that the approach was viable. The main limitations were tied to hardware constraints rather than fundamental design issues, which makes the system promising with better components.
 
 # Challenges
 
 # Reflections
+There’s a lot of room to push this project further. On the hardware side, using higher-quality hydrophones, amplifiers, and sensors would likely improve both range and signal reliability. A more robust, fully waterproof enclosure would also be necessary for real-world ocean deployment, especially at greater depths.
+
+On the signal processing side, the FFT-based approach worked, but it’s not the most efficient. Switching to something like the Goertzel algorithm and adding error correction could make the communication more reliable and computationally efficient.
+
+More broadly, scaling the system for real deployment would require improvements in power management, durability, and overall system robustness. The control system could also be refined to be more stable and responsive. Overall, this project laid a strong foundation, and with better resources, it could be developed into a much more capable system.
