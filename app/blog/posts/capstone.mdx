@@ -17,15 +17,18 @@ tags:
 <YouTube videoId="_qqejMcBk0U"/>
 
 # Project Overview
+
+This project was my senior capstone project as part of a group of four. We worked in collaboration with the Climate Foundation, a non-profit organization based in Oceania and Southeast Asia.
+
 ## Motivation
-This project was about building an underwater acoustic telemetry system for marine permaculture. The main goal was to transmit environmental data, like temperature, from a submerged seaweed platform up to the surface without using physical cables. This kind of system is useful because it avoids issues like entanglement and makes long-term monitoring more practical in ocean environments.
+Seaweed acts as a vital ecological "supercrop" by sequestering carbon, providing nutrient-dense fertilizers, and reducing livestock methane emissions; however, rising ocean temperatures are deepening the thermocline and disrupting the natural upwelling of cold, nutrient-rich water necessary for its survival. This degradation creates a "vicious cycle" where the loss of seaweed forests as carbon sinks further accelerates global warming and sea temperature rise. 
 
-![platform](/capstone/platform.png "foobar")
+![platform](/capstone/platform.png "Kelp growth platform")
 
-physical cables. This kind of system is useful because it avoids issues like entanglement and makes long-term monitoring more practical in ocean environments.
+To break this cycle, the Climate Foundation’s Marine Permaculture has  constructed 1,000-square-meter growth beds which are mechanically lowered to depths of up to 200 meters at night to access cold water and raised during the day for sunlight. However, this process is inefficient and needs manual intervention due to the lack of real-time telemetry.
 
 ## Goals
-The system was designed with real-world constraints in mind, including operating at depth, handling long transmission distances, and staying relatively low-cost. The end result was a working prototype that demonstrated wireless underwater communication and basic closed-loop control.
+The main goal was develop a system to transmit environmental data (temperature, depth, and current) from the submerged seaweed platform up to the surface without using physical cables. In addition, the system would also automatically control the raising and lowering of the kelp beds.
 
 # Development
 Development was pretty iterative, starting with small-scale tests and gradually building up to more complete system integration. I first focused on validating that acoustic transmission was even feasible using the available piezoelectric components. From there, I built a tank-based prototype that tied together sensing, transmission, reception, and actuation into a full loop. Later testing in a pool helped evaluate how the system performed over longer distances.
