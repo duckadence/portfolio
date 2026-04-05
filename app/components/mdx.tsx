@@ -54,33 +54,37 @@ function CustomLink(props) {
   return <a target="_blank" rel="noopener noreferrer" {...props} />;
 }
 
-// Function for a blank line (adjustable height)
-function Spacer({ size = 1 }) {
-  return <div style={{ height: `${size}rem` }} aria-hidden="true" />;
+function RoundedImage(props) {
+  return <Image alt={props.alt} className="rounded-lg" {...props} />;
 }
 
-// Function to add subtext below images
-function FigCaption({ children }) {
+function SmartImage(props) {
+  const { title, alt, ...rest } = props;
+
   return (
-    <span className="mt-2 block text-sm text-center text-neutral-500 dark:text-neutral-400">
-      {children}
+    // We use 'span' because it is an inline element allowed inside <p>
+    // 'display: block' makes it behave like a div for layout purposes
+    <span className="block -mt-10">
+      <span className="relative block w-full h-[450px]">
+        <Image
+          className="rounded-lg object-contain"
+          fill
+          alt={alt || ""}
+          {...rest}
+        />
+      </span>
+      {title && (
+        <span className="-mt-14 mb-6 block text-sm text-center text-neutral-500 dark:text-neutral-400">
+          {title}
+        </span>
+      )}
     </span>
   );
 }
 
-// Updated Image component to optionally handle a caption
-function RoundedImage(props) {
-  const { alt, caption, ...rest } = props;
-  return (
-    <figure className="my-8">
-      <Image alt={alt} className="rounded-lg" {...rest} />
-      {caption && (
-        <figcaption className="mt-2 text-sm text-center text-neutral-500">
-          {caption}
-        </figcaption>
-      )}
-    </figure>
-  );
+// Simple spacer for blank lines
+function Spacer() {
+  return <div className="py-4" />;
 }
 
 function Code({ children, ...props }) {
@@ -132,14 +136,14 @@ let components = {
   h4: createHeading(4),
   h5: createHeading(5),
   h6: createHeading(6),
-  Image: RoundedImage,
+  img: SmartImage, // This handles the markdown ![]() syntax
+  Image: SmartImage, // This allows the <Image /> tag to also have subtext
+  br: Spacer, // This handles the <br /> tag for blank lines
   a: CustomLink,
   YouTube: YouTubeComponent,
   code: Code,
   Table,
   Callout,
-  Spacer,
-  Caption: FigCaption,
 };
 
 export async function CustomMDX(props) {
