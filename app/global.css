@@ -36,7 +36,6 @@
 
         --bg-color: #0a0a0a;
         --selection-text: #ffffff;
-        --bg-color: #0d1111; /* Gunmetal teal-black */
         --grid-stroke: #1a1a1a;
     }
 }
@@ -147,55 +146,89 @@ html::before {
 }
 
 /* ==========================================================================
-  5. NAVIGATION & LINKS
-  ==========================================================================
-*/
+   5. NAVIGATION & LINKS (Consolidated)
+   ========================================================================== */
 
+/* 1. Shared Variables & Base Logic */
 nav a,
 footer a,
 .footer-link,
-.see-all-link {
-    /* Use flex-nowrap to prevent the text from ever dropping below the icon */
-    display: inline-flex !important;
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-    gap: 8px;
-
-    @apply transition-all lowercase tracking-tight;
-    @apply text-slate-900 dark:text-slate-100;
-
-    /* Use border instead of text-decoration to include the icon */
-    text-decoration: none !important;
-    border-bottom: 1px solid #0070f3;
-    padding-bottom: 2px; /* Slight breathing room for icons */
-    white-space: nowrap !important;
+.see-all-link,
+.post-title {
+    --link-blue: #0070f3;
+    --link-highlight: rgba(0, 112, 243, 0.1);
+    transition: all 0.2s ease;
 }
 
 @media (prefers-color-scheme: dark) {
     nav a,
     footer a,
     .footer-link,
-    .see-all-link {
-        border-bottom-color: #3291ff;
+    .see-all-link,
+    .post-title {
+        --link-blue: #3291ff;
+        --link-highlight: rgba(50, 145, 255, 0.1);
     }
 }
 
-/* Hover States */
+/* 2. Standard Nav & Utility Links */
+nav a,
+footer a,
+.footer-link,
+.see-all-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 8px;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid var(--link-blue);
+    padding-bottom: 2px;
+
+    @apply lowercase tracking-tight text-slate-900 dark:text-slate-100;
+}
+
+/* 3. Blog Post Titles */
+.post-title {
+    display: inline-block;
+    position: relative;
+    font-weight: 500;
+    color: var(--sh-identifier);
+    padding: 0;
+    margin: 0;
+    border-radius: 2px;
+
+    /* Post titles use native underline for precision spacing */
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    text-decoration-color: var(--link-blue);
+}
+
+/* 4. Unified Hover States */
+nav a:hover,
+footer a:hover,
+.footer-link:hover,
+.see-all-link:hover,
+.group:hover .post-title {
+    color: var(--link-blue) !important;
+    background-color: var(--link-highlight);
+}
+
+/* Specific Hover Details (Border vs Underline) */
 nav a:hover,
 footer a:hover,
 .footer-link:hover,
 .see-all-link:hover {
-    @apply !text-[#0070f3] dark:!text-[#3291ff];
-
-    /* Matches the 'Antique' warmth logic */
-    background-color: rgba(0, 112, 243, 0.1);
-
-    /* Thicken the border line instead of using underline */
     border-bottom-width: 2px;
-    padding-bottom: 1px; /* Offset for the thicker border to prevent jumping */
+    padding-bottom: 1px;
 }
 
-/* Ensure the span inside the link is also flexed horizontally */
+.group:hover .post-title {
+    text-decoration-thickness: 2px;
+}
+
+/* 5. Icon & Inner Component Helpers */
 .nav-link-text {
     display: inline-flex !important;
     align-items: center !important;
@@ -203,62 +236,11 @@ footer a:hover,
     gap: inherit;
 }
 
-/* Ensure icons are treated as part of the line container */
 nav a svg {
     display: block !important;
     flex-shrink: 0 !important;
-    /* Adjust vertical alignment if icon looks too high */
     position: relative;
     top: 1px;
-}
-
-/* ==========================================================================
-   5b. BLOG POST TITLES (Surgical Workstation Style)
-   ==========================================================================
-*/
-
-.post-title {
-    display: inline-block;
-    position: relative;
-    font-weight: 500;
-    /* Uses your sh-identifier variable for consistency */
-    color: var(--sh-identifier);
-
-    /* Precision alignment: px ensures underline width, mx keeps text aligned */
-    padding: 0 3px;
-    margin: 0 -3px;
-    border-radius: 2px;
-
-    /* Base Underline */
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 5px;
-    text-decoration-color: #0070f3;
-
-    transition: all 0.2s ease;
-}
-
-@media (prefers-color-scheme: dark) {
-    .post-title {
-        text-decoration-color: #3291ff;
-    }
-}
-
-/* Hover State triggered by the parent .group (the Link in posts.tsx) */
-.group:hover .post-title {
-    /* The Blue Pop - !important ensures it beats the prose heading styles */
-    color: #0070f3 !important;
-    background-color: rgba(0, 112, 243, 0.2); /* Stronger pop for warm bg */
-
-    /* Thicken the line on hover */
-    text-decoration-thickness: 2px;
-}
-
-@media (prefers-color-scheme: dark) {
-    .group:hover .post-title {
-        color: #3291ff !important;
-        background-color: rgba(50, 145, 255, 0.25);
-    }
 }
 
 /* ==========================================================================
@@ -371,17 +353,12 @@ nav a svg {
 .prose video {
     width: 100%;
     aspect-ratio: 16 / 9;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    @apply dark:border-neutral-800;
 
-    /* THE BLUR FIXES: */
-    overflow: hidden; /* Clips the video to the radius */
-    isolation: isolate; /* Prevents pixel bleeding with background */
-    backface-visibility: hidden; /* Forces integer pixel alignment */
-    transform: translateZ(0); /* Triggers GPU hardware acceleration */
-
-    /* Ensure no browser-added background colors leak out */
+    /* Maintain these for the blur/hardware acceleration fixes */
+    overflow: hidden;
+    isolation: isolate;
+    backface-visibility: hidden;
+    transform: translateZ(0);
     background-color: transparent;
 }
 

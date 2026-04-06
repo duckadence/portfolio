@@ -5,6 +5,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { highlight } from "sugar-high";
 import { YouTubeComponent } from "./youtube";
 
+// ... (Table, Callout, CustomLink, RoundedImage components remain unchanged)
+
 function Table({ data }) {
   if (!data || !data.headers) return null;
   let headers = data.headers.map((header, index) => (
@@ -54,24 +56,20 @@ function CustomLink(props) {
   return <a target="_blank" rel="noopener noreferrer" {...props} />;
 }
 
-function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+// ... inside your components file
+
+function StandardImage(props) {
+  // Removed "rounded-lg"
+  return <Image alt={props.alt} className="" {...props} />;
 }
 
 function SmartImage(props) {
   const { title, alt, ...rest } = props;
 
   return (
-    // We use 'span' because it is an inline element allowed inside <p>
-    // 'display: block' makes it behave like a div for layout purposes
     <span className="block -mt-10">
       <span className="relative block w-full h-[450px]">
-        <Image
-          className="rounded-lg object-contain"
-          fill
-          alt={alt || ""}
-          {...rest}
-        />
+        <Image className="object-contain" fill alt={alt || ""} {...rest} />
       </span>
       {title && (
         <span className="-mt-14 mb-6 block text-sm text-center text-neutral-500 dark:text-neutral-400">

@@ -60,7 +60,7 @@ export function BlogPosts({
 
                 {/* FEATURED IMAGE: Only shows if it exists and we aren't in "view all" mode */}
                 {post.metadata.image && !showViewAll && (
-                  <div className="relative mt-2 aspect-video w-full overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800">
+                  <div className="relative mt-2 aspect-video w-full overflow-hidden">
                     <Image
                       src={post.metadata.image}
                       alt={post.metadata.title}
@@ -78,7 +78,7 @@ export function BlogPosts({
       {showViewAll && (
         <div className="mt-8 flex justify-end">
           <Link href="/blog" className="see-all-link text-sm">
-            see all projects →
+            See All Projects →
           </Link>
         </div>
       )}
