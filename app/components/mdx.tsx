@@ -58,7 +58,7 @@ function CustomLink({ href, children, ...rest }: { href: string; children: React
 
 function StandardImage({ alt, ...rest }: { alt: string; [key: string]: any }) {
   // Removed "rounded-lg"
-  return <Image alt={alt} className="" {...rest} />;
+  return <Image alt={alt} className="" {...rest} >;
 }
 
 function SmartImage({ title, alt, ...rest }: { title?: string; alt: string; [key: string]: any }) {
