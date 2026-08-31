@@ -7,7 +7,7 @@ import { YouTubeComponent } from "./youtube";
 
 // ... (Table, Callout, CustomLink, RoundedImage components remain unchanged)
 
-function Table({ data }) {
+function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
   if (!data || !data.headers) return null;
   let headers = data.headers.map((header, index) => (
     <th key={index}>{header}</th>
@@ -16,7 +16,7 @@ function Table({ data }) {
     <tr key={index}>
       {row.map((cell, cellIndex) => (
         <td key={cellIndex}>{cell}</td>
-      ))}
+      )))
     </tr>
   ));
   return (
@@ -29,43 +29,39 @@ function Table({ data }) {
   );
 }
 
-function Callout(props) {
+function Callout({ emoji, children }: { emoji: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="px-4 py-3 bg-[#F7F7F7] dark:bg-[#181818] rounded p-1 text-sm flex items-center text-neutral-900 dark:text-neutral-100 mb-8">
-      <div className="flex items-center w-4 mr-4">{props.emoji}</div>
-      <div className="w-full callout leading-relaxed">{props.children}</div>
+    <div className="px-4 py-3 bg-[#F7F7F7] dark:bg-[#181811827] rounded p-1 text-sm flex items-center text-neutral-900 dark:text-neutral-100 mb-8">
+      <div className="flex items-center w-4 mr-4">{emoji}</div>
+      <div className="w-full callout leading-relaxed">{children}</div>
     </div>
   );
 }
 
-function CustomLink(props) {
-  let href = props.href;
-
+function CustomLink({ href, children, ...rest }: { href: string; children: React.ReactNode; rest?: any }) {
   if (href.startsWith("/")) {
     return (
-      <Link href={href} {...props}>
-        {props.children}
+      <Link href={href} {...rest}>
+        {children}
       </Link>
     );
   }
 
   if (href.startsWith("#")) {
-    return <a {...props} />;
+    return <a {...rest} />;
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />;
+  return <a target="_blank" rel="noopener noreferrer" {...rest} />;
 }
 
 // ... inside your components file
 
-function StandardImage(props) {
+function StandardImage({ alt, ...rest }: { alt: string; [key: string]: any }) {
   // Removed "rounded-lg"
-  return <Image alt={props.alt} className="" {...props} />;
+  return <Image alt={alt} className="" {...rest} />;
 }
 
-function SmartImage(props) {
-  const { title, alt, ...rest } = props;
-
+function SmartImage({ title, alt, ...rest }: { title?: string; alt: string; [key: string]: any }) {
   return (
     <span className="block -mt-10">
       <span className="relative block w-full h-[450px]">
@@ -75,7 +71,7 @@ function SmartImage(props) {
         <span className="-mt-14 mb-6 block text-sm text-center text-neutral-500 dark:text-neutral-400">
           {title}
         </span>
-      )}
+      ))
     </span>
   );
 }
@@ -85,13 +81,13 @@ function Spacer() {
   return <div className="py-4" />;
 }
 
-function Code({ children, ...props }) {
+function Code({ children, ...props }: { children: React.ReactNode; [key: string]: any }) {
   let codeHTML = highlight(children);
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
-function Strikethrough(props) {
-  return <del {...props} />;
+function Strikethrough({ children, ...props }: { children: React.ReactNode; [key: string]: any }) {
+  return <del {...props}>{children}</del>;
 }
 
 function slugify(str) {
