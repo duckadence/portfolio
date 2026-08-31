@@ -39,21 +39,21 @@ function Callout(props: { emoji: React.ReactNode; children: React.ReactNode }) {
 }
 
 function CustomLink(props: { href: string; children: React.ReactNode }) {
-  let href = props.href;
+  const { href, children, ...rest } = props;
 
   if (href.startsWith("/")) {
     return (
-      <Link href={href} {...props}>
-        {props.children}
+      <Link href={href} {...rest}>
+        {children}
       </Link>
     );
   }
 
   if (href.startsWith("#")) {
-    return <a {...props} />;
+    return <a {...rest} />;
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />;
+  return <a target="_blank" rel="noopener noreferrer" {...rest} />;
 }
 
 // ... inside your components file
