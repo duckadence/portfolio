@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 /**
  * 2. METADATA GENERATION
  */
-export function generateMetadata({ params }) {
+export function generateMetadata({ params }: { params: { slug: string } }) {
   const post = getBlogPosts().find((p) => p.slug === params.slug);
   if (!post) return;
 
@@ -63,7 +63,7 @@ function TagBadge({ tag }: { tag: string }) {
 /**
  * 4. MAIN BLOG COMPONENT
  */
-export default function Blog({ params }) {
+export default function Blog({ params }: { params: { slug: string } }) {
   const post = getBlogPosts().find((p) => p.slug === params.slug);
 
   if (!post) notFound();
