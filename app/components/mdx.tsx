@@ -58,18 +58,24 @@ function CustomLink(props: { href: string; children: React.ReactNode }) {
 
 // ... inside your components file
 
-function StandardImage(props: { alt: string }) {
+function StandardImage(props: { src: string; alt: string }) {
   // Removed "rounded-lg"
-  return <Image alt={props.alt} className="" {...props} />;
+  return <Image src={props.src} alt={props.alt} className="" />;
 }
 
-function SmartImage(props: { title?: string; alt: string }) {
-  const { title, alt, ...rest } = props;
+function SmartImage(props: { src: string; title?: string; alt: string }) {
+  const { title, alt, src, ...rest } = props;
 
   return (
     <span className="block -mt-10">
       <span className="relative block w-full h-[450px]">
-        <Image className="object-contain" fill alt={alt || ""} {...rest} />
+        <Image
+          src={src}
+          className="object-contain"
+          fill
+          alt={alt || ""}
+          {...rest}
+        />
       </span>
       {title && (
         <span className="-mt-14 mb-6 block text-sm text-center text-neutral-500 dark:text-neutral-400">
@@ -86,7 +92,7 @@ function Spacer() {
 }
 
 function Code(props: { children: React.ReactNode }) {
-  let codeHTML = highlight(props.children);
+  let codeHTML = highlight(String(props.children));
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
@@ -94,9 +100,8 @@ function Strikethrough(props: { children: React.ReactNode }) {
   return <del {...props} />;
 }
 
-function slugify(str: unknown) {
+function slugify(str: string) {
   return str
-    .toString()
     .toLowerCase()
     .trim() // Remove whitespace from both ends of a string
     .replace(/\s+/g, "-") // Replace spaces with -
