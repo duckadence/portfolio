@@ -144,7 +144,7 @@ let components = {
   Callout,
 };
 
-export async function CustomMDX(props: { components?: object }) {
+export async function CustomMDX(props: { source: string; components?: object }) {
   return (
     <MDXRemote
       {...props}
