@@ -9,12 +9,12 @@ import { YouTubeComponent } from "./youtube";
 
 function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
   if (!data || !data.headers) return null;
-  let headers = data.headers.map((header, index) => (
+  let headers = data.headers.map((header: string, index: number) => (
     <th key={index}>{header}</th>
   ));
-  let rows = data.rows.map((row, index) => (
+  let rows = data.rows.map((row: string[], index: number) => (
     <tr key={index}>
-      {row.map((cell, cellIndex) => (
+      {row.map((cell: string, cellIndex: number) => (
         <td key={cellIndex}>{cell}</td>
       ))}
     </tr>
@@ -29,39 +29,43 @@ function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
   );
 }
 
-function Callout({ emoji, children }: { emoji: React.ReactNode; children: React.ReactNode }) {
+function Callout(props: { emoji: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="px-4 py-3 bg-[#F7F7F7] dark:bg-[#181818] rounded p-1 text-sm flex items-center text-neutral-900 dark:text-neutral-100 mb-8">
-      <div className="flex items-center w-4 mr-4">{emoji}</div>
-      <div className="w-full callout leading-relaxed">{children}</div>
+      <div className="flex items-center w-4 mr-4">{props.emoji}</div>
+      <div className="w-full callout leading-relaxed">{props.children}</div>
     </div>
   );
 }
 
-function CustomLink({ href, children, ...rest }: { href: string; children: React.ReactNode; rest?: any }) {
+function CustomLink(props: { href: string; children: React.ReactNode }) {
+  let href = props.href;
+
   if (href.startsWith("/")) {
     return (
-      <Link href={href} {...rest}>
-        {children}
+      <Link href={href} {...props}>
+        {props.children}
       </Link>
     );
   }
 
   if (href.startsWith("#")) {
-    return <a {...rest} />;
+    return <a {...props} />;
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...rest} />;
+  return <a target="_blank" rel="noopener noreferrer" {...props} />;
 }
 
 // ... inside your components file
 
-function StandardImage({ alt, ...rest }: { alt: string; [key: string]: any }) {
+function StandardImage(props: { alt: string }) {
   // Removed "rounded-lg"
-  return <Image alt={alt} className="" {...rest} />;
+  return <Image alt={props.alt} className="" {...props} />;
 }
 
-function SmartImage({ title, alt, ...rest }: { title?: string; alt: string; [key: string]: any }) {
+function SmartImage(props: { title?: string; alt: string }) {
+  const { title, alt, ...rest } = props;
+
   return (
     <span className="block -mt-10">
       <span className="relative block w-full h-[450px]">
@@ -71,7 +75,7 @@ function SmartImage({ title, alt, ...rest }: { title?: string; alt: string; [key
         <span className="-mt-14 mb-6 block text-sm text-center text-neutral-500 dark:text-neutral-400">
           {title}
         </span>
-      ))}
+      )}
     </span>
   );
 }
@@ -81,16 +85,16 @@ function Spacer() {
   return <div className="py-4" />;
 }
 
-function Code({ children, ...props }: { children: React.ReactNode; [key: string]: any }) {
-  let codeHTML = highlight(children);
+function Code(props: { children: React.ReactNode }) {
+  let codeHTML = highlight(props.children);
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
-function Strikethrough({ children, ...props }: { children: React.ReactNode; [key: string]: any }) {
-  return <del {...props}>{children}</del>;
+function Strikethrough(props: { children: React.ReactNode }) {
+  return <del {...props} />;
 }
 
-function slugify(str) {
+function slugify(str: unknown) {
   return str
     .toString()
     .toLowerCase()
@@ -101,9 +105,9 @@ function slugify(str) {
     .replace(/\-\-+/g, "-"); // Replace multiple - with single -
 }
 
-function createHeading(level) {
-  const Heading = ({ children }) => {
-    let slug = slugify(children);
+function createHeading(level: number) {
+  const Heading = (props: { children: React.ReactNode }) => {
+    let slug = slugify(props.children);
     return React.createElement(
       `h${level}`,
       { id: slug },
@@ -114,7 +118,7 @@ function createHeading(level) {
           className: "anchor",
         }),
       ],
-      children,
+      props.children,
     );
   };
 
@@ -140,7 +144,7 @@ let components = {
   Callout,
 };
 
-export async function CustomMDX(props) {
+export async function CustomMDX(props: { components?: object }) {
   return (
     <MDXRemote
       {...props}
