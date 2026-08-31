@@ -16,7 +16,7 @@ function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
     <tr key={index}>
       {row.map((cell, cellIndex) => (
         <td key={cellIndex}>{cell}</td>
-      )))
+      ))}
     </tr>
   ));
   return (
