@@ -91,8 +91,8 @@ function Spacer() {
   return <div className="py-4" />;
 }
 
-function Code(props: { children: React.ReactNode }) {
-  let codeHTML = highlight(String(props.children));
+function Code({ children, ...props }: { children: React.ReactNode }) {
+  let codeHTML = highlight(String(children));
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
